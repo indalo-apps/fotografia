@@ -289,7 +289,7 @@ function derive(S){
   const shake=(S.tripod||t<=lim+1e-9)?0:Math.min(40,(3+4*Math.log2(t/lim))*Math.sqrt(f/50));
   const setK=S.wb==='auto'?(P.K<3600?P.K+400:P.K):+S.wb,wbd=Math.log2(setK/P.K);
   return{N,t,f,iso,s,meter:s+(P.bias||0),ec:ECV[S.ec],bFg:bl(0),bSub:bl(.5),bBg:bl(1),bgScale:Math.pow(f/50,.6),
-    disp,dx:sp?v[0]/sp*disp:0,dy:sp?v[1]/sp*disp:0,moving:sp>0,shake,panning,wbd,setK,tripod:S.tripod,focus:S.focus,scene:S.scene,mode:S.mode};
+    disp,dx:sp?v[0]/sp*disp:0,dy:sp?v[1]/sp*disp:0,moving:sp>0,shake,panning,wbd,setK,wbAuto:S.wb==='auto',tripod:S.tripod,focus:S.focus,scene:S.scene,mode:S.mode};
 }
 function bestT(S,fi,ii,target){let b=0,bd=1e9;T.forEach((_,i)=>{const d=Math.abs(meterOf(S,fi,i,ii)-target);if(d<bd-1e-9){bd=d;b=i}});return b}
 function bestF(S,ti,ii,target){let b=0,bd=1e9;F.forEach((_,i)=>{const d=Math.abs(meterOf(S,i,ti,ii)-target);if(d<bd-1e-9){bd=d;b=i}});return b}
@@ -374,7 +374,8 @@ function analysis(x){
   if(x.shake)a.push(['bad',`<b>Trepidación</b>: a esa velocidad y con ${x.f} mm no puedes sujetar la cámara quieta. Regla práctica: a pulso, como mínimo 1/${x.f}${x.panning?' (en barrido, 1/15)':''}. O usa trípode.`]);
   if(x.iso>=3200)a.push(['bad',`<b>ISO ${x.iso}</b>: aparece ruido (grano de colores), sobre todo en las sombras.`]);
   else if(x.iso>=800)a.push(['',`ISO ${x.iso}: algo de ruido, aún aceptable.`]);
-  if(Math.abs(x.wbd)>.15)a.push(['bad',`<b>Balance de blancos</b> mal ajustado para esta luz: la foto sale ${x.wbd>0?'anaranjada (cálida)':'azulada (fría)'}. Elige el ajuste que corresponde a la luz${x.wbd>0?' o uno más bajo':' o uno más alto'}.`]);
+  if(x.wbAuto&&x.wbd>.1)a.push(['','Balance automático: con luz de bombilla o farola deja un <b>toque cálido</b> a propósito, para conservar el ambiente.']);
+  else if(Math.abs(x.wbd)>.15)a.push(['bad',`<b>Balance de blancos</b> mal ajustado para esta luz: la foto sale ${x.wbd>0?'anaranjada (cálida)':'azulada (fría)'}. Elige el ajuste que corresponde a la luz${x.wbd>0?' o uno más bajo':' o uno más alto'}.`]);
   return a;
 }
 
