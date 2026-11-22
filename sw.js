@@ -1,8 +1,8 @@
 // © 2026 Adela Moreno Vega y Carlos Moreno Otto. Todos los derechos reservados.
 // Service worker de FotoLab: permite usarla sin conexión.
 // Al subir una versión nueva, cambia el nombre de la caché y se borra la anterior.
-const CACHE = "fotolab-1.1";
-const PRECACHE = ["./", "index.html", "manifest.webmanifest", "apple-touch-icon.png", "icon-192.png", "icon-512.png", "icon-152.png", "icon-167.png", "icon-maskable-512.png", "favicon-32.png",
+const CACHE = "fotolab-2.0";
+const PRECACHE = ["./", "index.html", "js/motor.js?r=2.0", "js/juegos.js?r=2.0", "js/composicion.js?r=2.0", "js/misfotos.js?r=2.0", "js/aprende.js?r=2.0", "manifest.webmanifest", "apple-touch-icon.png", "icon-192.png", "icon-512.png", "icon-152.png", "icon-167.png", "icon-maskable-512.png", "favicon-32.png",
   "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap"];
 
 self.addEventListener("install", e => {

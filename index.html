@@ -9,7 +9,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="app-version" content="1.1">
+<meta name="app-version" content="2.0">
 <meta name="theme-color" content="#0e1014">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="manifest" href="manifest.webmanifest">
@@ -24,177 +24,257 @@
 <meta name="apple-mobile-web-app-title" content="FotoLab">
 <title>FotoLab · Aprende fotografía</title>
 <meta name="author" content="Adela Moreno Vega y Carlos Moreno Otto">
-<meta name="description" content="App para aprender fotografía: apertura, velocidad de obturación, ISO, profundidad de campo y reglas de composición, con una cámara simulada, retos y test.">
+<meta name="description" content="App para aprender fotografía: apertura, velocidad de obturación, ISO, profundidad de campo, focal, balance de blancos y composición, con una cámara simulada, retos, juegos y análisis de tus propias fotos.">
 <meta name="copyright" content="© 2026 Adela Moreno Vega y Carlos Moreno Otto. Todos los derechos reservados.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0e1014;--panel:#171a21;--panel2:#1f232c;--line:#2b303b;--text:#e9ebf0;--muted:#98a0ae;--accent:#ffb020;--accent2:#ffcf6b;--ok:#3ecf8e;--bad:#ff6363;--mono:'JetBrains Mono',ui-monospace,monospace}
+:root{--bg:#0e1014;--panel:#171a21;--panel2:#1f232c;--line:#2b303b;--text:#e9ebf0;--muted:#a0a8b6;--accent:#ffb020;--accent2:#ffcf6b;--ok:#3ecf8e;--bad:#ff6b6b;--mono:'JetBrains Mono',ui-monospace,monospace}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html{font-size:17px}
 @supports (font:-apple-system-body){html{font:-apple-system-body}}
 html,body{margin:0;background:var(--bg);color:var(--text)}
-body{font-family:Inter,system-ui,sans-serif;font-size:1rem;line-height:1.45}
-body{padding-bottom:84px}
-header{max-width:1040px;margin:0 auto;padding:calc(14px + env(safe-area-inset-top)) calc(16px + env(safe-area-inset-right)) 8px calc(16px + env(safe-area-inset-left));display:flex;align-items:center;gap:10px}
+body{font-family:Inter,system-ui,sans-serif;font-size:1rem;line-height:1.45;padding-bottom:calc(84px + env(safe-area-inset-bottom))}
+button,select,input{font:inherit;color:inherit}
+header{max-width:1080px;margin:0 auto;padding:calc(12px + env(safe-area-inset-top)) calc(16px + env(safe-area-inset-right)) 8px calc(16px + env(safe-area-inset-left));display:flex;align-items:center;gap:10px}
 header .logo{flex-shrink:0;width:34px;height:34px;border-radius:50%;background:radial-gradient(circle at 50% 50%,#111 0 30%,var(--accent) 31% 40%,#222 41% 100%);box-shadow:0 0 0 2px #333}
-header h1{margin:0;font-size:clamp(20px,1.4rem,30px);font-weight:800;letter-spacing:-.02em}
+header h1{margin:0;font-size:clamp(20px,1.25rem,30px);font-weight:800;letter-spacing:-.02em}
 header h1 span{color:var(--accent)}
-header .about{white-space:nowrap;flex-shrink:0;font-size:clamp(11px,0.7333rem,14px)!important;color:var(--muted);margin-left:auto;font-family:var(--mono);font-size:0.7333rem;cursor:pointer;border:1px solid var(--line);border-radius:22px;padding:4px 14px;min-height:44px;background:none}
-#barra-act{position:fixed;top:0;left:0;right:0;z-index:60;background:var(--accent);color:#151515;text-align:center;font-weight:700;padding:calc(8px + env(safe-area-inset-top)) 8px 8px}
-@media(max-width:899px) and (orientation:portrait){#v-camara .camgrid>div:first-child{position:sticky;top:0;z-index:10;background:var(--bg);padding:env(safe-area-inset-top) 0 8px}}
-@media(orientation:landscape) and (max-height:560px){header{padding-top:6px;padding-bottom:4px}#v-camara .camgrid>div:first-child{position:sticky;top:0;z-index:10;background:var(--bg);padding-top:env(safe-area-inset-top)}#v-camara .viewer,.compwrap{width:min(100%,calc((100dvh - 175px)*1.5));margin:0 auto}.shutter{margin-top:8px}.shutter .btn{padding:8px}nav.tabs{padding-top:2px}nav.tabs button{min-height:44px;flex-direction:row;gap:6px}main{padding-left:calc(12px + env(safe-area-inset-left));padding-right:calc(12px + env(safe-area-inset-right))}}
-@media(max-width:600px){main{padding:0 8px}.card{padding:12px}.hud{font-size:0.7333rem;gap:8px;padding:6px 8px}.meter{min-width:120px}h2{margin-top:4px}}
-main{max-width:1040px;margin:0 auto;padding:0 12px}
+header .about{margin-left:auto;white-space:nowrap;flex-shrink:0;color:var(--muted);font-family:var(--mono);font-size:clamp(11px,.7rem,14px);border:1px solid var(--line);border-radius:22px;padding:4px 14px;min-height:44px;background:none;cursor:pointer}
+main{max-width:1080px;margin:0 auto;padding:0 calc(12px + env(safe-area-inset-right)) 0 calc(12px + env(safe-area-inset-left))}
 .view{display:none}.view.active{display:block}
-h2{font-size:1.2rem;margin:10px 4px 10px}
-p.lead{color:var(--muted);margin:0 4px 14px}
-nav.tabs{position:fixed;bottom:0;left:0;right:0;background:rgba(14,16,20,.96);backdrop-filter:blur(8px);border-top:1px solid var(--line);display:flex;justify-content:center;padding:6px 4px calc(6px + env(safe-area-inset-bottom));z-index:30}
-nav.tabs .in{display:flex;max-width:620px;width:100%}
-nav.tabs button{flex:1;min-width:0;min-height:48px;position:relative;background:none;border:0;color:var(--muted);font:inherit;font-size:clamp(10px,0.7333rem,12.5px);overflow:hidden;font-weight:600;display:flex;flex-direction:column;align-items:center;gap:2px;padding:4px 2px;cursor:pointer}
+.panel{display:none}.panel.active{display:block}
+h2{font-size:1.1rem;margin:8px 4px 8px}
+h3{font-size:1rem}
+p.lead{color:var(--muted);margin:0 4px 14px;font-size:.9rem}
+.sect{font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:20px 4px 8px;font-weight:700}
+/* barra de pestañas */
+nav.tabs{position:fixed;bottom:0;left:0;right:0;background:rgba(14,16,20,.94);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-top:1px solid var(--line);display:flex;justify-content:center;padding:6px calc(4px + env(safe-area-inset-right)) calc(6px + env(safe-area-inset-bottom)) calc(4px + env(safe-area-inset-left));z-index:30}
+nav.tabs .in{display:flex;max-width:640px;width:100%}
+nav.tabs button{flex:1;min-width:0;min-height:48px;position:relative;background:none;border:0;color:var(--muted);font-size:clamp(10px,.68rem,12.5px);font-weight:600;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:4px 2px;cursor:pointer;overflow:hidden;white-space:nowrap}
 nav.tabs button .ic{font-size:20px;line-height:1}
 nav.tabs button.on{color:var(--accent);font-weight:800}
 nav.tabs button.on::before{content:'';position:absolute;top:-6px;left:28%;right:28%;height:3px;border-radius:0 0 3px 3px;background:var(--accent)}
+/* controles comunes */
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px}
+.row{margin:0 0 12px}
+.lbl{display:flex;justify-content:space-between;align-items:baseline;font-size:.8rem;color:var(--muted);margin-bottom:4px;font-weight:600;gap:8px}
+.lbl .v{font-family:var(--mono);color:var(--text);font-size:.88rem;white-space:nowrap}
+.lbl .v .auto{font-size:.6rem;background:var(--accent);color:#111;border-radius:4px;padding:1px 4px;margin-left:6px;font-family:Inter}
+.seg{display:flex;background:var(--panel2);border-radius:10px;padding:3px;gap:3px}
+.seg button{flex:1;border:0;background:none;color:var(--muted);font-weight:700;font-size:.8rem;padding:6px 4px;border-radius:8px;cursor:pointer;min-height:44px}
+.seg button.on{background:var(--accent);color:#141414}
+.seg button:disabled{opacity:.35;cursor:default}
+.seg.sub{margin:4px 0 14px;overflow-x:auto}
+.seg.sub button{white-space:nowrap;padding:6px 10px}
+.modehelp{font-size:.72rem;color:var(--muted);margin-top:6px}
+input[type=range]{width:100%;accent-color:var(--accent);height:44px;margin:0;touch-action:pan-y}
+input[type=range]:disabled{opacity:.3}
+.rangeends{display:flex;justify-content:space-between;font-size:.66rem;color:var(--muted);margin-top:-6px}
+select{min-height:44px;width:100%;background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:8px}
+select:disabled{opacity:.5}
+.switch{display:flex;align-items:center;justify-content:space-between;background:var(--panel2);border-radius:10px;padding:8px 12px;cursor:pointer;font-weight:600;font-size:.85rem;min-height:44px;margin-bottom:8px;gap:10px}
+.switch input{width:22px;height:22px;accent-color:var(--accent);flex-shrink:0}
+.switch.off{opacity:.45}
+.btn{border:0;border-radius:12px;padding:10px 16px;min-height:44px;font-weight:700;cursor:pointer;background:var(--panel2);color:var(--text);display:inline-flex;align-items:center;justify-content:center;gap:6px;text-align:center}
+.btn.pri{background:var(--accent);color:#151515}
+.btn.ghost{background:none;border:1px solid var(--line)}
+.btn.wide{width:100%}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}
+.chips button{border:1px solid var(--line);background:var(--panel2);color:var(--muted);border-radius:22px;padding:6px 14px;min-height:44px;font-size:.8rem;font-weight:600;cursor:pointer}
+.chips button.on{background:var(--accent);color:#151515;border-color:var(--accent)}
+.chips button .done{color:var(--ok);margin-left:4px}
+.chips button.on .done{color:#145c3a}
+.sr{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.fb{margin-top:10px;padding:10px 12px;border-radius:10px;font-size:.88rem;display:none}
+.fb.ok{display:block;background:rgba(62,207,142,.12);border:1px solid rgba(62,207,142,.4)}
+.fb.bad{display:block;background:rgba(255,107,107,.1);border:1px solid rgba(255,107,107,.4)}
+.fb.info{display:block;background:var(--panel2);border:1px solid var(--line)}
+.grid2{display:grid;gap:14px}
+@media(min-width:900px),(orientation:landscape) and (min-width:600px){.grid2{grid-template-columns:1.45fr 1fr;align-items:start}}
 /* cámara */
-.camgrid{display:grid;gap:14px}
-@media(min-width:900px),(orientation:landscape) and (min-width:600px){.camgrid{grid-template-columns:1.45fr 1fr;align-items:start}#v-camara .camgrid{grid-template-areas:"v c" "w c";grid-template-rows:auto 1fr}#v-camara .why{align-self:start}#v-camara .camgrid>div:first-child{grid-area:v}#v-camara .ctl{grid-area:c}#v-camara .why{grid-area:w}}
+#v-camara .grid2{grid-template-areas:"v" "c" "w"}
+@media(min-width:900px),(orientation:landscape) and (min-width:600px){#v-camara .grid2{grid-template-areas:"v c" "w c";grid-template-rows:auto 1fr}}
+#v-camara .vcol{grid-area:v}#v-camara .ctl{grid-area:c}#v-camara .why{grid-area:w;align-self:start}
+@media(max-width:899px) and (orientation:portrait){#v-camara .vcol{position:sticky;top:0;z-index:10;background:var(--bg);padding:env(safe-area-inset-top) 0 8px}}
 .viewer{position:relative;border-radius:14px;overflow:hidden;background:#000;border:1px solid var(--line)}
-.viewer canvas{display:block;width:100%;height:auto}
-.hud{font-size:clamp(11px,0.8667rem,15px)!important;position:absolute;left:0;right:0;bottom:0;padding:8px 12px 9px;background:linear-gradient(transparent,rgba(0,0,0,.78));font-family:var(--mono);font-size:0.8667rem;color:#fff;display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap}
-.hud b{font-weight:700}.hud .a{color:var(--accent2);font-size:0.6667rem;vertical-align:super;margin-left:1px}
-.meter{flex:1;min-width:150px;position:relative;height:26px}
-.meter .scale{font-size:11px!important;position:absolute;left:0;right:0;top:0;display:flex;justify-content:space-between;font-size:0.7333rem;color:#ccd}
-.meter .ticks{position:absolute;left:0;right:0;top:13px;height:6px;background:repeating-linear-gradient(90deg,#fff 0 1px,transparent 1px calc(100%/6));opacity:.8;border-left:1px solid #fff;border-right:1px solid #fff}
-.meter .mk{position:absolute;top:19px;width:0;height:0;border-left:5px solid transparent;border-right:5px solid transparent;border-bottom:7px solid var(--accent);transform:translateX(-5px);transition:left .15s}
+.viewer canvas.photo{display:block;width:100%;height:auto}
+.hud{position:absolute;left:0;right:0;bottom:0;padding:8px 12px 9px;background:linear-gradient(transparent,rgba(0,0,0,.8));font-family:var(--mono);font-size:clamp(11px,.8rem,15px);color:#fff;display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap}
+.hud b{font-weight:700}.hud .a{color:var(--accent2);font-size:10px;vertical-align:super;margin-left:1px}
+.meter{flex:1;min-width:140px;position:relative;height:28px}
+.meter .scale{position:absolute;left:0;right:0;top:0;display:flex;justify-content:space-between;font-size:11px;color:#dde}
+.meter .ticks{position:absolute;left:0;right:0;top:14px;height:6px;background:repeating-linear-gradient(90deg,#fff 0 1px,transparent 1px calc(100%/6));opacity:.8;border-left:1px solid #fff;border-right:1px solid #fff}
+.meter .mk{position:absolute;top:20px;width:0;height:0;border-left:5px solid transparent;border-right:5px solid transparent;border-bottom:7px solid var(--accent);transform:translateX(-5px);transition:left .15s}
 .meter .mk.out{animation:blink .6s infinite;border-bottom-color:var(--bad)}
-.meter .oor{position:absolute;top:24px;font-size:0.7333rem;color:#fff;background:var(--bad);border-radius:4px;padding:0 4px;display:none;white-space:nowrap}
+.meter .oor{position:absolute;top:-18px;font-size:11px;color:#fff;background:var(--bad);border-radius:4px;padding:0 4px;display:none;white-space:nowrap}
 @keyframes blink{50%{opacity:.15}}
-.badge{font-size:clamp(11px,0.8rem,14px)!important;position:absolute;top:10px;left:10px;background:rgba(0,0,0,.6);padding:3px 8px;border-radius:6px;font-family:var(--mono);font-size:0.8rem;color:#fff}
-.warn{position:absolute;top:10px;right:10px;background:rgba(255,99,99,.9);padding:3px 8px;border-radius:6px;font-size:0.8rem;font-weight:700;display:none}
+.badge{position:absolute;top:10px;left:10px;background:rgba(0,0,0,.6);padding:3px 8px;border-radius:6px;font-family:var(--mono);font-size:clamp(11px,.75rem,14px);color:#fff}
+.warn{position:absolute;top:40px;left:10px;background:rgba(255,107,107,.92);padding:3px 8px;border-radius:6px;font-size:12px;font-weight:700;display:none;color:#fff}
+.histo{position:absolute;top:10px;right:10px;width:150px;height:56px;background:rgba(0,0,0,.55);border-radius:6px;display:none}
 .flash{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none}
 .flash.go{animation:fl .35s}
 @keyframes fl{0%{opacity:.9}100%{opacity:0}}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px}
-.row{margin:0 0 14px}
-.lbl{display:flex;justify-content:space-between;align-items:baseline;font-size:0.8667rem;color:var(--muted);margin-bottom:6px;font-weight:600}
-.lbl .v{font-family:var(--mono);color:var(--text);font-size:1rem}
-.lbl .v .auto{font-size:0.6667rem;background:var(--accent);color:#111;border-radius:4px;padding:1px 4px;margin-left:6px;font-family:Inter}
-.seg{display:flex;background:var(--panel2);border-radius:10px;padding:3px;gap:3px}
-.seg button{flex:1;border:0;background:none;color:var(--muted);font:inherit;font-weight:700;font-size:0.8667rem;padding:7px 4px;border-radius:8px;cursor:pointer;min-height:44px}
-.seg button.on{background:var(--accent);color:#141414}
-.seg button:disabled{opacity:.4;cursor:default}
-.modehelp{font-size:0.8rem;color:var(--muted);margin-top:6px;min-height:32px}
-input[type=range]{width:100%;accent-color:var(--accent);height:44px;margin:0;touch-action:pan-y}
-input[type=range]:disabled{opacity:.35}
-.rangeends{display:flex;justify-content:space-between;font-size:0.7333rem;color:var(--muted);margin-top:-4px}
-select{min-height:44px;width:100%;background:var(--panel2);color:var(--text);border:1px solid var(--line);border-radius:10px;padding:9px;font:inherit}
-select:disabled{opacity:.6}
-.switch{display:flex;align-items:center;justify-content:space-between;background:var(--panel2);border-radius:10px;padding:9px 12px;cursor:pointer;font-weight:600;font-size:0.9333rem}
-.switch input{width:20px;height:20px;accent-color:var(--accent)}
-.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.why{margin-top:0}
-.why h3{font-size:0.9333rem;margin:0 0 8px;color:var(--accent2)}
-.why ul{margin:0;padding-left:18px}
-.why li{margin:3px 0;font-size:0.9333rem}
-.why ul{list-style:none;padding-left:0}.why li{padding-left:24px;position:relative}.why li::before{content:'•';position:absolute;left:6px;color:var(--muted)}.why li.ok::before{content:'✓';left:3px;color:var(--ok);font-weight:800}.why li.bad::before{content:'!';left:7px;color:var(--bad);font-weight:800}
-.btn{border:0;border-radius:12px;padding:12px 16px;min-height:44px;font:inherit;font-weight:700;cursor:pointer;background:var(--panel2);color:var(--text)}
-.btn.pri{background:var(--accent);color:#151515}
-.btn.ghost{background:none;border:1px solid var(--line)}
-.shutter{display:flex;gap:10px;margin-top:12px}
+.shutter{display:flex;gap:10px;margin-top:10px}
 .shutter .btn{flex:1}
+.why h3{font-size:.85rem;margin:0 0 8px;color:var(--accent2)}
+.why ul{margin:0;padding:0;list-style:none}
+.why li{margin:4px 0;font-size:.85rem;padding-left:24px;position:relative}
+.why li::before{content:'•';position:absolute;left:6px;color:var(--muted)}
+.why li.ok::before{content:'✓';left:3px;color:var(--ok);font-weight:800}
+.why li.bad::before{content:'!';left:7px;color:var(--bad);font-weight:800}
+details.adv{border-top:1px solid var(--line);margin-top:6px;padding-top:6px}
+details.adv>summary{min-height:44px;display:flex;align-items:center;cursor:pointer;font-weight:700;font-size:.85rem;list-style:none;gap:8px}
+details.adv>summary::-webkit-details-marker{display:none}
+details.adv>summary::after{content:'+';margin-left:auto;color:var(--muted);font-size:1.2rem}
+details.adv[open]>summary::after{content:'–'}
 .chb{display:none;background:linear-gradient(135deg,#3a2a06,#241a05);border:1px solid #6b4d0b;border-radius:14px;padding:12px 14px;margin-bottom:12px}
 .chb.on{display:block}
 .chb .t{font-weight:800;color:var(--accent2)}
-.chb .d{font-size:0.9333rem;margin-top:2px}
-@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+.chb .d{font-size:.85rem;margin-top:2px}
+.chb .lock{font-size:.72rem;color:var(--muted);margin-top:4px}
+@media(orientation:landscape) and (max-height:560px){header{padding-top:6px;padding-bottom:4px}#v-camara .vcol{position:sticky;top:0;z-index:10;background:var(--bg);padding-top:env(safe-area-inset-top)}
+  #v-camara .viewer,.compwrap canvas,.gview{width:min(100%,calc((100dvh - 175px)*1.5));margin:0 auto}.shutter{margin-top:8px}nav.tabs{padding-top:2px}nav.tabs button{min-height:44px;flex-direction:row;gap:6px}}
 /* retos */
 .grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}
-.reto{cursor:pointer;transition:transform .1s}
-.reto:hover{transform:translateY(-2px);border-color:#4a4f5c}
-.reto .n{font-family:var(--mono);font-size:0.7333rem;color:var(--muted)}
-.reto h3{margin:2px 0 4px;font-size:1.067rem}
-.reto p{margin:0 0 8px;font-size:0.8667rem;color:var(--muted)}
-.stars{color:var(--accent);font-size:1.2rem;letter-spacing:2px}
+.reto{cursor:pointer;text-align:left;width:100%;color:inherit}
+.reto:hover{border-color:#4a4f5c}
+.reto .n{font-family:var(--mono);font-size:.66rem;color:var(--muted)}
+.reto h3{margin:2px 0 4px;font-size:.95rem}
+.reto p{margin:0 0 8px;font-size:.78rem;color:var(--muted)}
+.stars{color:var(--accent);font-size:1.05rem;letter-spacing:2px}
 .stars .off{color:var(--muted)}
-.total{font-family:var(--mono);color:var(--accent2);margin:0 4px 12px}
+.total{font-family:var(--mono);color:var(--accent2);margin:0 4px 6px}
+.medals{display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}
+.medal{text-align:center;padding:14px 10px}
+.medal .ic{font-size:2.2rem;line-height:1.1}
+.medal h3{margin:6px 0 2px;font-size:.85rem}
+.medal p{margin:0;font-size:.7rem;color:var(--muted)}
+.medal.no .ic{filter:grayscale(1);opacity:.35}
+.medal .st{font-size:.68rem;font-weight:700;margin-top:6px}
+.medal.ok .st{color:var(--ok)}
+.gview{max-width:760px;margin:0 auto;position:relative;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:#000}
+.gview canvas{display:block;width:100%;height:auto}
+.q{font-size:1rem;font-weight:700;margin:12px 0 10px}
+.opts{display:grid;gap:8px}
+@media(min-width:600px){.opts.two{grid-template-columns:1fr 1fr}}
+.opts button{text-align:left;border:1px solid var(--line);background:var(--panel2);border-radius:12px;padding:12px 14px;cursor:pointer;min-height:48px}
+.opts button.ok{border-color:var(--ok);background:rgba(62,207,142,.15)}
+.opts button.ok::after{content:' ✓';color:var(--ok);font-weight:800}
+.opts button.bad{border-color:var(--bad);background:rgba(255,107,107,.12)}
+.opts button.bad::after{content:' ✗';color:var(--bad);font-weight:800}
+.opts button:disabled{cursor:default}
+.prog{height:6px;background:var(--panel2);border-radius:4px;overflow:hidden;margin-bottom:10px}
+.prog i{display:block;height:100%;background:var(--accent);transition:width .3s}
+.exp{margin-top:12px;font-size:.85rem;color:var(--muted);display:none}
+.big{font-size:2.6rem;font-weight:800;color:var(--accent);font-family:var(--mono);text-align:center;margin:6px 0 0}
+.crbar{display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-weight:700;margin-bottom:8px}
+.crbar .time{font-size:1.4rem;color:var(--accent)}
+.crbar .time.low{color:var(--bad)}
+.mini3{display:grid;gap:4px;margin-top:10px}
+/* composición */
+.compwrap{position:relative;border-radius:14px;overflow:hidden;border:1px solid var(--line);touch-action:none;cursor:grab;background:#000;display:flex;justify-content:center}
+.compwrap:active{cursor:grabbing}
+.compwrap:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.compwrap canvas{display:block;max-width:100%;max-height:min(68vh,620px);width:auto;height:auto}
+.hint{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.6);color:#fff;font-size:clamp(11px,.75rem,14px);padding:4px 10px;border-radius:20px;pointer-events:none;white-space:nowrap}
+.pad{display:grid;grid-template-columns:repeat(3,48px);grid-template-rows:repeat(3,48px);gap:4px;justify-content:center;margin:4px 0 8px}
+.pad button{border:1px solid var(--line);background:var(--panel2);border-radius:10px;font-size:1.1rem;cursor:pointer}
+.pad .c{font-size:.8rem;color:var(--muted)}
+.pair{display:grid;gap:12px}
+@media(min-width:600px){.pair{grid-template-columns:1fr 1fr}}
+.pair .opt{display:flex;flex-direction:column;gap:8px}
+.pair canvas{width:100%;height:auto;border-radius:12px;border:2px solid var(--line);display:block}
+.pair .opt.ok canvas{border-color:var(--ok)}.pair .opt.bad canvas{border-color:var(--bad)}
+/* mis fotos */
+.drop{border:2px dashed var(--line);border-radius:14px;padding:22px;text-align:center;color:var(--muted)}
+.drop .btn{margin-top:10px}
+.photo-out{display:none}
+.photo-out.on{display:block}
+.photowrap{position:relative;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:#000;display:flex;justify-content:center}
+.photowrap canvas{display:block;max-width:100%;max-height:70vh;width:auto;height:auto}
+table.exif{width:100%;border-collapse:collapse;font-size:.85rem}
+table.exif td{padding:7px 4px;border-bottom:1px solid var(--line)}
+table.exif td:first-child{color:var(--muted);width:44%}
+table.exif td:last-child{font-family:var(--mono)}
+.mis{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}
+.mi{display:flex;flex-direction:column;gap:8px}
+.mi .top{display:flex;gap:10px;align-items:flex-start}
+.mi .ic{font-size:1.6rem}
+.mi h3{margin:0;font-size:.95rem}
+.mi p{margin:2px 0 0;font-size:.78rem;color:var(--muted)}
+.mi .thumb{width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:10px;background:var(--panel2);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:.8rem}
+.mi img.thumb{display:block}
+.mi div.thumb{aspect-ratio:auto;height:60px}
+.mi .acts{display:flex;gap:8px}
+.mi .acts>*{flex:1}
+.mi .note{font-size:.75rem;color:var(--ok)}
+.mi.done{border-color:rgba(62,207,142,.45)}
+/* aprende */
+.acc{margin-bottom:10px}
+.acc summary{min-height:44px;cursor:pointer;font-weight:700;font-size:.9rem;list-style:none;display:flex;align-items:center;gap:10px}
+.acc summary::-webkit-details-marker{display:none}
+.acc summary .e{font-size:1.3rem;width:30px;text-align:center}
+.acc summary::after{content:'+';margin-left:auto;color:var(--muted);font-size:1.2rem}
+.acc[open] summary::after{content:'–'}
+.acc .body{margin-top:8px;font-size:.85rem}
+.acc .body p{margin:6px 0}
+.acc .body .k{background:var(--panel2);border-radius:8px;padding:8px 10px;font-family:var(--mono);font-size:.74rem;margin:8px 0;overflow-x:auto;white-space:nowrap}
+.search{width:100%;min-height:44px;background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:8px 14px;margin-bottom:12px}
+dl.glos{margin:0}
+dl.glos dt{font-weight:800;margin-top:12px;color:var(--accent2)}
+dl.glos dd{margin:2px 0 0;font-size:.85rem}
+.tl{position:relative;padding-left:26px}
+.tl::before{content:'';position:absolute;left:9px;top:4px;bottom:4px;width:2px;background:var(--line)}
+.tl .it{position:relative;margin-bottom:16px}
+.tl .it::before{content:'';position:absolute;left:-22px;top:5px;width:12px;height:12px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 3px var(--bg)}
+.tl .y{font-family:var(--mono);font-weight:700;color:var(--accent2);font-size:.85rem}
+.tl h3{margin:0;font-size:.95rem}
+.tl p{margin:2px 0 0;font-size:.82rem;color:var(--muted)}
 /* modal */
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;z-index:50;padding:16px}
 .modal.on{display:flex}
 .modal .box{background:var(--panel);border:1px solid var(--line);border-radius:16px;max-width:520px;width:100%;max-height:90vh;overflow:auto;padding:16px}
 .modal img{width:100%;border-radius:10px;display:block}
-.modal h3{margin:12px 0 4px;font-size:1.267rem}
-.modal .stars{font-size:2rem;margin:4px 0}
+.modal h3{margin:12px 0 4px;font-size:1.1rem}
+.modal .stars{font-size:1.8rem;margin:4px 0}
 .modal ul{padding-left:18px;margin:8px 0}
-.modal li{margin:4px 0}
+.modal li{margin:4px 0;font-size:.9rem}
 .modal .acts{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap}
 .modal .acts .btn{flex:1}
-/* composición */
-.compwrap{position:relative;border-radius:14px;overflow:hidden;border:1px solid var(--line);touch-action:none;cursor:grab;background:#000}
-.compwrap:active{cursor:grabbing}
-.compwrap canvas{display:block;width:100%;height:auto}
-.hint{white-space:nowrap;font-size:clamp(11px,0.8rem,14px)!important;position:absolute;bottom:8px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.6);color:#fff;font-size:0.8rem;padding:4px 10px;border-radius:20px;pointer-events:none}
-.chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
-.chips button{border:1px solid var(--line);background:var(--panel2);color:var(--muted);border-radius:22px;padding:6px 14px;min-height:44px;font:inherit;font-size:0.8667rem;font-weight:600;cursor:pointer}
-.chips button.on{background:var(--accent);color:#151515;border-color:var(--accent)}
-.pad{display:grid;grid-template-columns:repeat(3,48px);grid-template-rows:repeat(3,48px);gap:4px;justify-content:center;margin:4px 0 14px}
-.pad button{border:1px solid var(--line);background:var(--panel2);color:var(--text);border-radius:10px;font-size:1.2rem;cursor:pointer}
-.pad .c{font-size:0.8rem;color:var(--muted)}
-.compwrap:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
-.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-.fb{margin-top:10px;padding:10px 12px;border-radius:10px;font-size:0.9333rem;display:none}
-.fb.ok{display:block;background:rgba(62,207,142,.12);border:1px solid rgba(62,207,142,.4)}
-.fb.bad{display:block;background:rgba(255,99,99,.1);border:1px solid rgba(255,99,99,.4)}
-/* teoría */
-.acc{margin-bottom:10px}
-
-.acc summary{min-height:44px;cursor:pointer;font-weight:700;font-size:1rem;list-style:none;display:flex;align-items:center;gap:10px}
-.acc summary::-webkit-details-marker{display:none}
-.acc summary .e{font-size:1.467rem;width:30px;text-align:center}
-.acc summary::after{content:'+';margin-left:auto;color:var(--muted);font-size:1.333rem}
-.acc[open] summary::after{content:'–'}
-.acc .body{margin-top:10px;font-size:0.9333rem}
-.acc .body p{margin:6px 0}
-.acc .body .k{background:var(--panel2);border-radius:8px;padding:8px 10px;font-family:var(--mono);font-size:0.8333rem;margin:8px 0;overflow-x:auto;white-space:nowrap}
-.acc .body .btn{padding:8px 14px;font-size:0.8667rem;margin-top:6px;min-height:44px}
-.sect{font-size:0.8rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:18px 4px 8px;font-weight:700}
-/* test */
-.q{font-size:1.133rem;font-weight:700;margin:4px 0 12px}
-.opts{display:grid;gap:8px}
-.opts button{text-align:left;border:1px solid var(--line);background:var(--panel2);color:var(--text);border-radius:12px;padding:12px 14px;font:inherit;cursor:pointer}
-.opts button.ok{border-color:var(--ok);background:rgba(62,207,142,.15)}
-.opts button.bad{border-color:var(--bad);background:rgba(255,99,99,.12)}
-.opts button:disabled{cursor:default}
-.prog{height:6px;background:var(--panel2);border-radius:4px;overflow:hidden;margin-bottom:12px}
-.prog i{display:block;height:100%;background:var(--accent);transition:width .3s}
-.exp{margin-top:12px;font-size:0.9333rem;color:var(--muted);display:none}
-.big{font-size:2.933rem;font-weight:800;color:var(--accent);font-family:var(--mono);text-align:center;margin:10px 0 0}
+#barra-act{position:fixed;top:0;left:0;right:0;z-index:60;background:var(--accent);color:#151515;text-align:center;font-weight:700;padding:calc(8px + env(safe-area-inset-top)) 8px 8px}
+@media(max-width:600px){main{padding-left:calc(8px + env(safe-area-inset-left));padding-right:calc(8px + env(safe-area-inset-right))}.card{padding:12px}.hud{gap:8px;padding:6px 8px}.meter{min-width:120px}.histo{width:110px;height:44px}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 </style>
 </head>
 <body>
 <header>
-  <div class="logo"></div>
+  <div class="logo" aria-hidden="true"></div>
   <h1>Foto<span>Lab</span></h1>
-  <button id="about" class="about" aria-label="Información de la app">v1.1 · info</button>
+  <button id="about" class="about" aria-label="Información y novedades">v2.0 · info</button>
 </header>
 
 <main>
-<!-- ============ CÁMARA ============ -->
+<!-- ================= CÁMARA ================= -->
 <section class="view active" id="v-camara">
-  <div class="chb" id="chb">
+  <div class="chb" id="chb" role="status">
     <div class="t" id="chbT"></div>
     <div class="d" id="chbD"></div>
+    <div class="lock" id="chbL"></div>
   </div>
-  <div class="camgrid">
-    <div>
+  <div class="grid2">
+    <div class="vcol">
       <div class="viewer">
-        <canvas id="cam" width="720" height="480" role="img" aria-label="Foto simulada"></canvas>
-        <div class="badge" id="badge">M</div>
-        <div class="warn" id="warn">✋ Trepidación</div>
+        <canvas id="cam" class="photo" width="720" height="480" role="img" aria-label="Foto simulada"></canvas>
+        <div class="badge" id="badge" aria-hidden="true">M</div>
+        <div class="warn" id="warn" aria-hidden="true">✋ Trepidación</div>
+        <canvas id="histo" class="histo" width="150" height="56" aria-hidden="true"></canvas>
         <div class="flash" id="flash" aria-hidden="true"></div>
         <div class="hud" aria-hidden="true">
           <span><b id="hT">1/1000</b><span class="a" id="hTa"></span></span>
           <span><b id="hF">f/5.6</b><span class="a" id="hFa"></span></span>
           <span>ISO <b id="hI">100</b></span>
+          <span id="hFoc">50mm</span>
+          <span id="hEC"></span>
           <div class="meter">
             <div class="scale"><span>−3</span><span>−2</span><span>−1</span><span>0</span><span>+1</span><span>+2</span><span>+3</span></div>
             <div class="ticks"></div>
@@ -212,19 +292,13 @@ select:disabled{opacity:.6}
       <div class="row">
         <div class="lbl">Modo de la cámara</div>
         <div class="seg" id="modes" role="group" aria-label="Modo de la cámara">
-          <button data-m="M" class="on" aria-label="M, manual">M</button><button data-m="A" aria-label="A, prioridad a la apertura">A</button><button data-m="S" aria-label="S, prioridad a la velocidad">S</button><button data-m="P" aria-label="P, programa">P</button>
+          <button data-m="M" aria-label="M, manual">M</button><button data-m="A" aria-label="A, prioridad a la apertura">A</button><button data-m="S" aria-label="S, prioridad a la velocidad">S</button><button data-m="P" aria-label="P, programa">P</button>
         </div>
         <div class="modehelp" id="modehelp"></div>
       </div>
       <div class="row">
         <div class="lbl">Escena</div>
-        <select id="scene" aria-label="Escena">
-          <option value="sol">☀️ Día soleado</option>
-          <option value="nublado">☁️ Día nublado</option>
-          <option value="anochecer">🌇 Anochecer</option>
-          <option value="velodromo">🏟️ Velódromo cubierto</option>
-          <option value="noche">🌙 Calle de noche</option>
-        </select>
+        <select id="scene" aria-label="Escena"></select>
       </div>
       <div class="row">
         <div class="lbl"><span>Apertura (diafragma)</span><span class="v" id="vF"></span></div>
@@ -244,11 +318,38 @@ select:disabled{opacity:.6}
       <div class="row">
         <div class="lbl">Punto de enfoque</div>
         <div class="seg" id="focus" role="group" aria-label="Punto de enfoque">
-          <button data-f="0">Flores</button><button data-f="0.5" class="on">Ciclista</button><button data-f="1">Fondo</button>
+          <button data-f="0">Primer plano</button><button data-f="0.5">Sujeto</button><button data-f="1">Fondo</button>
         </div>
       </div>
-      <label class="switch">Cámara en trípode <input type="checkbox" id="tripod"></label>
+      <label class="switch" id="swTri">Cámara en trípode <input type="checkbox" id="tripod"></label>
+      <details class="adv" id="adv" open>
+        <summary>Ajustes avanzados</summary>
+        <div class="row">
+          <div class="lbl"><span>Distancia focal (zoom)</span><span class="v" id="vFoc"></span></div>
+          <input type="range" id="rFoc" min="0" max="6" step="1" aria-label="Distancia focal">
+          <div class="rangeends" aria-hidden="true"><span>18 mm · gran angular</span><span>200 mm · tele</span></div>
+        </div>
+        <div class="row">
+          <div class="lbl"><span>Compensación de exposición</span><span class="v" id="vEC"></span></div>
+          <input type="range" id="rEC" min="0" max="18" step="1" aria-label="Compensación de exposición">
+          <div class="rangeends" aria-hidden="true"><span>−3 · más oscura</span><span>+3 · más clara (en A, S y P)</span></div>
+        </div>
+        <div class="row">
+          <div class="lbl">Balance de blancos</div>
+          <select id="wb" aria-label="Balance de blancos">
+            <option value="auto">Automático (AWB)</option>
+            <option value="5500">☀️ Luz de día · 5500 K</option>
+            <option value="6500">☁️ Nublado · 6500 K</option>
+            <option value="7500">🌳 Sombra · 7500 K</option>
+            <option value="3200">💡 Tungsteno · 3200 K</option>
+            <option value="4000">🏢 Fluorescente · 4000 K</option>
+          </select>
+        </div>
+        <label class="switch" id="swPan">Barrido: seguir al sujeto <input type="checkbox" id="pan"></label>
+        <label class="switch">Mostrar histograma <input type="checkbox" id="histoOn"></label>
+      </details>
     </div>
+
     <div class="card why">
       <h3>¿Qué está pasando?</h3>
       <ul id="why"></ul>
@@ -256,65 +357,126 @@ select:disabled{opacity:.6}
   </div>
 </section>
 
-<!-- ============ RETOS ============ -->
+<!-- ================= RETOS ================= -->
 <section class="view" id="v-retos">
-  <h2>Retos de exposición</h2>
-  <p class="lead">Cada reto te pide una foto concreta. Consíguela con la cámara y gana hasta 3 estrellas: ⭐ objetivo cumplido · ⭐ exposición correcta · ⭐ ISO lo más bajo posible.</p>
-  <div class="total" id="total"></div>
-  <div class="grid" id="retos"></div>
-</section>
-
-<!-- ============ COMPOSICIÓN ============ -->
-<section class="view" id="v-comp">
-  <h2>Composición</h2>
-  <p class="lead">Arrastra la imagen para encuadrar, como si movieras la cámara. Con el zoom acercas o alejas.</p>
-  <div class="camgrid">
-    <div>
-      <div class="compwrap" id="compwrap" tabindex="0" role="application" aria-label="Visor de composición. Usa las flechas del teclado o los botones de encuadre para mover la cámara.">
-        <canvas id="comp" width="900" height="600" role="img" aria-label="Atardecer en el mar con un velero y un faro"></canvas>
-        <div class="hint" aria-hidden="true">☝️ Arrastra o usa ◀ ▶</div>
-      </div>
-      <div class="fb" id="compfb" role="status" aria-live="polite"></div>
-      <div class="sr" id="comppos" aria-live="polite"></div>
-    </div>
-    <div class="card">
-      <div class="row">
-        <div class="lbl">Ejercicio</div>
-        <div class="chips" id="ejs"></div>
-        <div id="ejd" style="font-size:14px"></div>
-      </div>
-      <div class="row">
-        <div class="lbl">Guía en el visor</div>
-        <div class="chips" id="guides"></div>
-      </div>
-      <div class="row">
-        <div class="lbl">Mover el encuadre</div>
-        <div class="pad" role="group" aria-label="Mover el encuadre">
-          <span></span><button data-mv="0,-1" aria-label="Mover arriba">▲</button><span></span>
-          <button data-mv="-1,0" aria-label="Mover a la izquierda">◀</button><button class="c" data-mv="c" aria-label="Centrar">⦿</button><button data-mv="1,0" aria-label="Mover a la derecha">▶</button>
-          <span></span><button data-mv="0,1" aria-label="Mover abajo">▼</button><span></span>
-        </div>
-      </div>
-      <div class="row">
-        <div class="lbl"><span>Zoom</span><span class="v" id="vZ"></span></div>
-        <input type="range" id="rZ" min="0" max="100" value="45" aria-label="Zoom">
-      </div>
-      <button class="btn pri" id="check" style="width:100%">✔︎ Comprobar encuadre</button>
-    </div>
+  <div class="seg sub" role="group" aria-label="Apartados de Retos" data-group="retos">
+    <button data-p="lista">Retos</button><button data-p="adivina">Adivina</button><button data-p="crono">Contrarreloj</button><button data-p="medallas">Medallas</button>
+  </div>
+  <div class="panel" data-panel="retos-lista">
+    <p class="lead">Consigue cada foto con la cámara. ⭐ objetivo cumplido · ⭐ exposición correcta · ⭐ ISO lo más bajo posible. En los primeros niveles solo puedes tocar algunos mandos.</p>
+    <div class="total" id="total"></div>
+    <div id="retos"></div>
+  </div>
+  <div class="panel" data-panel="retos-adivina">
+    <p class="lead">Mira la foto y deduce con qué ajustes se hizo. Entrena el ojo: 10 fotos por ronda.</p>
+    <div class="card" id="adivina"></div>
+  </div>
+  <div class="panel" data-panel="retos-crono">
+    <p class="lead">Clava la exposición (fotómetro a 0) en el máximo de escenas posible.</p>
+    <div class="card" id="crono"></div>
+  </div>
+  <div class="panel" data-panel="retos-medallas">
+    <div class="total" id="mtotal"></div>
+    <div class="medals" id="medals"></div>
   </div>
 </section>
 
-<!-- ============ TEORÍA ============ -->
-<section class="view" id="v-teoria">
-  <h2>Teoría</h2>
-  <p class="lead">Lo justo para entender lo que haces con la cámara. Pulsa en cada tema.</p>
-  <div id="teoria"></div>
+<!-- ================= COMPOSICIÓN ================= -->
+<section class="view" id="v-comp">
+  <div class="seg sub" role="group" aria-label="Apartados de Composición" data-group="comp">
+    <button data-p="encuadra">Encuadra</button><button data-p="mejor">¿Cuál es mejor?</button><button data-p="detecta">Detecta la regla</button>
+  </div>
+  <div class="panel" data-panel="comp-encuadra">
+    <div class="grid2">
+      <div>
+        <div class="compwrap" id="compwrap" tabindex="0" role="application" aria-label="Visor de composición. Usa las flechas del teclado o los botones de encuadre para mover la cámara.">
+          <canvas id="comp" width="900" height="600" role="img" aria-label="Foto para encuadrar"></canvas>
+          <div class="hint" aria-hidden="true">☝️ Arrastra o usa ◀ ▶</div>
+        </div>
+        <div class="fb" id="compfb" role="status" aria-live="polite"></div>
+        <div class="sr" id="comppos" aria-live="polite"></div>
+      </div>
+      <div class="card">
+        <div class="row"><div class="lbl">Foto</div><div class="chips" id="cphotos" role="group" aria-label="Foto"></div></div>
+        <div class="row"><div class="lbl">Ejercicio</div><div class="chips" id="ejs" role="group" aria-label="Ejercicio"></div><div id="ejd" style="font-size:.85rem"></div></div>
+        <div class="row"><div class="lbl">Guía en el visor</div><div class="chips" id="guides" role="group" aria-label="Guía en el visor"></div></div>
+        <div class="row"><div class="lbl">Proporción</div><div class="chips" id="aspects" role="group" aria-label="Proporción"></div></div>
+        <div class="row">
+          <div class="lbl">Mover el encuadre</div>
+          <div class="pad" role="group" aria-label="Mover el encuadre">
+            <span></span><button data-mv="0,-1" aria-label="Mover arriba">▲</button><span></span>
+            <button data-mv="-1,0" aria-label="Mover a la izquierda">◀</button><button class="c" data-mv="c" aria-label="Centrar">⦿</button><button data-mv="1,0" aria-label="Mover a la derecha">▶</button>
+            <span></span><button data-mv="0,1" aria-label="Mover abajo">▼</button><span></span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="lbl"><span>Zoom</span><span class="v" id="vZ"></span></div>
+          <input type="range" id="rZ" min="0" max="100" value="40" aria-label="Zoom">
+        </div>
+        <button class="btn pri wide" id="check">✔︎ Comprobar encuadre</button>
+      </div>
+    </div>
+  </div>
+  <div class="panel" data-panel="comp-mejor">
+    <p class="lead">Dos encuadres de la misma escena. ¿Cuál funciona mejor? 8 parejas.</p>
+    <div class="card" id="mejor"></div>
+  </div>
+  <div class="panel" data-panel="comp-detecta">
+    <p class="lead">¿Qué regla de composición usa cada foto?</p>
+    <div class="card" id="detecta"></div>
+  </div>
 </section>
 
-<!-- ============ TEST ============ -->
-<section class="view" id="v-test">
-  <h2>Test</h2>
-  <div class="card" id="test"></div>
+<!-- ================= MIS FOTOS ================= -->
+<section class="view" id="v-fotos">
+  <div class="seg sub" role="group" aria-label="Apartados de Mis fotos" data-group="fotos">
+    <button data-p="analiza">Analiza</button><button data-p="misiones">Misiones</button>
+  </div>
+  <div class="panel" data-panel="fotos-analiza">
+    <p class="lead">Elige una foto hecha con tu móvil o tu cámara: FotoLab lee sus datos (velocidad, diafragma, ISO, focal) y te los explica. 🔒 La foto no sale de tu dispositivo.</p>
+    <div class="drop card" id="drop">
+      <div>Arrastra aquí una foto o</div>
+      <label class="btn pri"><input type="file" accept="image/*" id="fpick" class="sr">📷 Elegir una foto</label>
+    </div>
+    <div class="photo-out" id="pout">
+      <div class="grid2" style="margin-top:14px">
+        <div>
+          <div class="photowrap"><canvas id="pcv" role="img" aria-label="Tu foto"></canvas></div>
+          <div class="row" style="margin-top:10px"><div class="lbl">Guía encima de tu foto</div><div class="chips" id="pguides" role="group" aria-label="Guía encima de tu foto"></div></div>
+        </div>
+        <div class="card">
+          <h3 style="margin-top:0">Datos de la foto</h3>
+          <table class="exif" id="ptable"></table>
+          <div class="why" style="margin-top:12px"><h3>Lo que dicen los datos</h3><ul id="pwhy"></ul></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="panel" data-panel="fotos-misiones">
+    <p class="lead">Sal a hacer fotos de verdad. Cada misión practica una idea; añade tu foto para completarla (se guarda solo en este dispositivo).</p>
+    <div class="total" id="mistotal"></div>
+    <div class="mis" id="mis"></div>
+  </div>
+</section>
+
+<!-- ================= APRENDE ================= -->
+<section class="view" id="v-aprende">
+  <div class="seg sub" role="group" aria-label="Apartados de Aprende" data-group="aprende">
+    <button data-p="teoria">Teoría</button><button data-p="glosario">Glosario</button><button data-p="historia">Historia</button><button data-p="test">Test</button>
+  </div>
+  <div class="panel" data-panel="aprende-teoria"><div id="teoria"></div></div>
+  <div class="panel" data-panel="aprende-glosario">
+    <input type="search" class="search" id="gsearch" placeholder="Buscar un término…" aria-label="Buscar en el glosario">
+    <div class="card"><dl class="glos" id="glos"></dl><p id="gnone" style="display:none;color:var(--muted)">No hay ningún término con esa palabra.</p></div>
+  </div>
+  <div class="panel" data-panel="aprende-historia">
+    <p class="lead">De la cámara oscura al móvil: los grandes momentos de la fotografía.</p>
+    <div class="card"><div class="tl" id="hist"></div></div>
+  </div>
+  <div class="panel" data-panel="aprende-test">
+    <div class="row"><div class="lbl">Tema</div><div class="chips" id="ttemas" role="group" aria-label="Tema del test"></div></div>
+    <div class="card" id="test"></div>
+  </div>
 </section>
 </main>
 
@@ -322,460 +484,17 @@ select:disabled{opacity:.6}
   <button data-v="camara" class="on" aria-current="page"><span class="ic" aria-hidden="true">📷</span>Cámara</button>
   <button data-v="retos"><span class="ic" aria-hidden="true">🎯</span>Retos</button>
   <button data-v="comp"><span class="ic" aria-hidden="true">🖼️</span>Composición</button>
-  <button data-v="teoria"><span class="ic" aria-hidden="true">📘</span>Teoría</button>
-  <button data-v="test"><span class="ic" aria-hidden="true">✅</span>Test</button>
+  <button data-v="fotos"><span class="ic" aria-hidden="true">🗂️</span>Mis fotos</button>
+  <button data-v="aprende"><span class="ic" aria-hidden="true">📘</span>Aprende</button>
 </div></nav>
 
 <div id="barra-act" hidden>Actualizando FotoLab…</div>
 <div class="modal" id="modal"><div class="box" id="mbox" role="dialog" aria-modal="true" aria-labelledby="mtitle"></div></div>
 
-<script>
-/* ===================== utilidades ===================== */
-const RM=()=>matchMedia('(prefers-reduced-motion: reduce)').matches;
-const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
-function rng(seed){return ()=>{seed=(seed*16807)%2147483647;return (seed-1)/2147483646}}
-const store={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
-
-/* ===================== datos de cámara ===================== */
-const F=[1.4,2,2.8,4,5.6,8,11,16,22];
-const T=[1/4000,1/2000,1/1000,1/500,1/250,1/125,1/60,1/30,1/15,1/8,1/4,1/2,1,2,4,8,15,30];
-const TL=['1/4000','1/2000','1/1000','1/500','1/250','1/125','1/60','1/30','1/15','1/8','1/4','1/2','1"','2"','4"','8"','15"','30"'];
-const ISO=[100,200,400,800,1600,3200,6400,12800];
-const SPEED=600; // px/s del ciclista en el lienzo
-const SCENES={
- sol:{name:'Día soleado',ev:15,sky0:'#3d8fe0',sky1:'#c4e5ff',sun:'#fff7cf',sunX:.83,sunY:.12,sunR:26,mtn1:'#8fabc6',mtn2:'#6e9a68',g0:'#7cc35a',g1:'#4f9a3a',road:'#7f8186',line:'#f5f5f5',tree:'#3c7c36',plant:'#3f8f2f',fl:['#ff5a5f','#ffd23f','#ffffff']},
- nublado:{name:'Día nublado',ev:12,sky0:'#8f9aa7',sky1:'#d3d9df',clouds:true,mtn1:'#8e99a4',mtn2:'#6c7e66',g0:'#6f9a5c',g1:'#4c7442',road:'#6d7075',line:'#dcdcdc',tree:'#3b5d37',plant:'#3c6c31',fl:['#e25a5e','#e9c440','#f0f0f0']},
- anochecer:{name:'Anochecer',ev:9,sky0:'#25336a',sky1:'#f39a5c',sun:'#ffb46c',sunX:.2,sunY:.55,sunR:30,mtn1:'#45395e',mtn2:'#2e2c43',g0:'#3b4a36',g1:'#232e1f',road:'#3e4046',line:'#c9c2b0',tree:'#1f291c',lamps:true,plant:'#2b3b23',fl:['#b8484c','#c79f37','#cfcfcf']},
- velodromo:{name:'Velódromo cubierto',ev:8,indoor:true,plant:'#555',fl:[]},
- noche:{name:'Calle de noche',ev:4,sky0:'#04060d',sky1:'#1a2443',stars:true,sun:'#f1f1e4',sunX:.78,sunY:.13,sunR:17,city:true,g0:'#1e242a',g1:'#11151a',road:'#26292f',line:'#8d8a80',lamps:true,plant:'#1c2b1d',fl:['#7a3a3d','#80703a','#8a8a8a']}
-};
-const W=720,H=480;
-function mk(w=W,h=H){const c=document.createElement('canvas');c.width=w;c.height=h;return c}
-
-/* ===================== dibujo de la escena ===================== */
-function drawBG(c,P){
-  if(P.indoor) return drawVelodromo(c);
-  const hz=H*.58;
-  let g=c.createLinearGradient(0,0,0,hz);g.addColorStop(0,P.sky0);g.addColorStop(1,P.sky1);
-  c.fillStyle=g;c.fillRect(0,0,W,hz+2);
-  if(P.stars){const r=rng(7);c.fillStyle='#fff';for(let i=0;i<140;i++){c.globalAlpha=.25+r()*.75;const s=r()<.1?2:1.2;c.fillRect(r()*W,r()*hz*.85,s,s)}c.globalAlpha=1}
-  if(P.sun){const x=P.sunX*W,y=P.sunY*H;const rg=c.createRadialGradient(x,y,0,x,y,P.sunR*4);rg.addColorStop(0,P.sun);rg.addColorStop(.25,P.sun+'88');rg.addColorStop(1,P.sun+'00');c.fillStyle=rg;c.beginPath();c.arc(x,y,P.sunR*4,0,7);c.fill();c.fillStyle=P.sun;c.beginPath();c.arc(x,y,P.sunR,0,7);c.fill()}
-  if(P.clouds){const r=rng(11);for(let i=0;i<9;i++){const x=r()*W,y=20+r()*hz*.55,s=40+r()*70;c.fillStyle=`rgba(240,243,246,${.45+r()*.3})`;for(let j=0;j<5;j++){c.beginPath();c.ellipse(x+(j-2)*s*.45,y+Math.sin(j*1.7)*s*.12,s*.5,s*.28,0,0,7);c.fill()}}}
-  if(P.mtn1){let r=rng(3);c.fillStyle=P.mtn1;c.beginPath();c.moveTo(0,hz);let y=hz-80;for(let x=0;x<=W+40;x+=45){y=Math.max(hz-170,Math.min(hz-40,y+(r()-.5)*70));c.lineTo(x,y)}c.lineTo(W,hz);c.fill();
-    r=rng(5);c.fillStyle=P.mtn2;c.beginPath();c.moveTo(0,hz);y=hz-30;for(let x=0;x<=W+40;x+=30){y=Math.max(hz-70,Math.min(hz-10,y+(r()-.5)*30));c.lineTo(x,y)}c.lineTo(W,hz);c.fill()}
-  if(P.city){const r=rng(9);let x=-10;while(x<W){const w=40+r()*60,h=60+r()*160;c.fillStyle=r()<.5?'#0d1220':'#131a2b';c.fillRect(x,hz-h,w,h+2);for(let wy=hz-h+10;wy<hz-8;wy+=14)for(let wx=x+6;wx<x+w-8;wx+=11){if(r()<.42){c.fillStyle=r()<.8?'#ffd98a':'#bfe3ff';c.fillRect(wx,wy,5,7)}}x+=w+2}}
-  g=c.createLinearGradient(0,hz,0,H);g.addColorStop(0,P.g0);g.addColorStop(1,P.g1);c.fillStyle=g;c.fillRect(0,hz,W,H-hz);
-  if(!P.city){const r=rng(13);for(let i=0;i<26;i++){const x=r()*W,s=10+r()*16,y=hz+4+r()*12;c.fillStyle=P.tree;c.beginPath();c.ellipse(x,y-s,s*.7,s,0,0,7);c.fill();c.fillRect(x-1.5,y-s*.2,3,s*.5)}}
-  c.fillStyle=P.road;c.fillRect(0,H*.72,W,H*.18);
-  c.fillStyle='rgba(0,0,0,.18)';c.fillRect(0,H*.72,W,4);
-  c.fillStyle=P.line;for(let x=10;x<W;x+=70)c.fillRect(x,H*.81-2,38,4);
-  if(P.lamps){for(let x=60;x<W;x+=210){const top=H*.42;c.fillStyle='#15171c';c.fillRect(x-2,top,4,H*.72-top);c.fillRect(x-2,top,22,3);
-      const lx=x+20,ly=top+6;let rg=c.createRadialGradient(lx,ly,0,lx,ly,70);rg.addColorStop(0,'rgba(255,214,140,.95)');rg.addColorStop(.15,'rgba(255,200,120,.5)');rg.addColorStop(1,'rgba(255,190,110,0)');c.fillStyle=rg;c.beginPath();c.arc(lx,ly,70,0,7);c.fill();
-      rg=c.createRadialGradient(lx,H*.8,0,lx,H*.8,110);rg.addColorStop(0,'rgba(255,200,120,.35)');rg.addColorStop(1,'rgba(255,200,120,0)');c.fillStyle=rg;c.beginPath();c.ellipse(lx,H*.8,120,30,0,0,7);c.fill()}}
-}
-function drawVelodromo(c){
-  const hz=H*.52;
-  let g=c.createLinearGradient(0,0,0,hz);g.addColorStop(0,'#2d2a2a');g.addColorStop(1,'#7c6c55');c.fillStyle=g;c.fillRect(0,0,W,hz);
-  c.strokeStyle='rgba(20,20,20,.7)';c.lineWidth=3;for(let x=-40;x<W+40;x+=60){c.beginPath();c.moveTo(x,0);c.lineTo(x+30,60);c.lineTo(x+60,0);c.stroke()}
-  c.beginPath();c.moveTo(0,60);c.lineTo(W,60);c.stroke();
-  for(let x=50;x<W;x+=120){const rg=c.createRadialGradient(x,72,0,x,72,50);rg.addColorStop(0,'rgba(255,250,230,1)');rg.addColorStop(.2,'rgba(255,245,220,.6)');rg.addColorStop(1,'rgba(255,245,220,0)');c.fillStyle=rg;c.beginPath();c.arc(x,72,50,0,7);c.fill();c.fillStyle='#fff';c.fillRect(x-14,68,28,7)}
-  const r=rng(21);c.fillStyle='#3c3a40';c.fillRect(0,110,W,hz-110);
-  for(let y=118;y<hz-4;y+=11)for(let x=4;x<W;x+=9){if(r()<.75){c.fillStyle=['#c44','#36c','#eee','#ec3','#3a5','#222','#d8a'][Math.floor(r()*7)];c.beginPath();c.arc(x+r()*3,y,3.2,0,7);c.fill()}}
-  c.fillStyle='#e6e1d6';c.fillRect(0,hz-6,W,8);
-  c.fillStyle='#16a';c.fillRect(0,hz+2,W,6);
-  g=c.createLinearGradient(0,hz,0,H);g.addColorStop(0,'#a5703d');g.addColorStop(1,'#d39a5c');c.fillStyle=g;c.fillRect(0,hz+8,W,H-hz-8);
-  c.strokeStyle='rgba(80,45,20,.25)';c.lineWidth=1;for(let y=hz+16;y<H;y+=9){c.beginPath();c.moveTo(0,y);c.lineTo(W,y);c.stroke()}
-  c.fillStyle='#1b6fd1';c.fillRect(0,H*.9,W,10);c.fillStyle='#111';c.fillRect(0,H*.86,W,4);c.fillStyle='#d22';c.fillRect(0,H*.76,W,3);
-}
-function drawRider(c,P,night){
-  const cx=W*.48,gy=H*.85;
-  c.fillStyle='rgba(0,0,0,.28)';c.beginPath();c.ellipse(cx,gy+2,95,9,0,0,7);c.fill();
-  const R=[cx-48,gy-33],Fh=[cx+50,gy-33],B=[cx-4,gy-30],S=[cx-22,gy-84],Hd=[cx+30,gy-86];
-  c.lineCap='round';c.lineJoin='round';
-  for(const w of [R,Fh]){c.strokeStyle='#15151a';c.lineWidth=5;c.beginPath();c.arc(w[0],w[1],32,0,7);c.stroke();c.strokeStyle='rgba(200,200,210,.7)';c.lineWidth=1;for(let a=0;a<6.28;a+=.52){c.beginPath();c.moveTo(w[0],w[1]);c.lineTo(w[0]+Math.cos(a)*30,w[1]+Math.sin(a)*30);c.stroke()}}
-  c.strokeStyle='#d8262f';c.lineWidth=5;c.beginPath();c.moveTo(...R);c.lineTo(...B);c.lineTo(...S);c.closePath();c.moveTo(...S);c.lineTo(...Hd);c.lineTo(...B);c.moveTo(...Hd);c.lineTo(...Fh);c.stroke();
-  c.strokeStyle='#222';c.lineWidth=4;c.beginPath();c.moveTo(Hd[0],Hd[1]);c.lineTo(cx+40,gy-96);c.lineTo(cx+46,gy-88);c.stroke();
-  c.beginPath();c.moveTo(S[0]-8,S[1]-4);c.lineTo(S[0]+10,S[1]-4);c.stroke();
-  const hip=[cx-18,gy-96],sh=[cx+16,gy-130];
-  c.strokeStyle='#1d2b55';c.lineWidth=11;c.beginPath();c.moveTo(...hip);c.lineTo(cx-2,gy-62);c.lineTo(B[0]+6,B[1]+6);c.stroke();
-  c.strokeStyle='#26386e';c.beginPath();c.moveTo(...hip);c.lineTo(cx+8,gy-70);c.lineTo(B[0]-6,B[1]+10);c.stroke();
-  c.strokeStyle='#f2b705';c.lineWidth=17;c.beginPath();c.moveTo(...hip);c.lineTo(...sh);c.stroke();
-  c.strokeStyle='#e9b38c';c.lineWidth=7;c.beginPath();c.moveTo(...sh);c.lineTo(cx+30,gy-108);c.lineTo(cx+42,gy-95);c.stroke();
-  c.fillStyle='#e9b38c';c.beginPath();c.arc(cx+30,gy-144,11,0,7);c.fill();
-  c.fillStyle='#d8262f';c.beginPath();c.ellipse(cx+26,gy-150,14,9,-.3,Math.PI,0);c.fill();
-  if(night){let rg=c.createRadialGradient(cx+48,gy-90,0,cx+48,gy-90,40);rg.addColorStop(0,'rgba(255,255,240,1)');rg.addColorStop(.2,'rgba(255,255,230,.6)');rg.addColorStop(1,'rgba(255,255,230,0)');c.fillStyle=rg;c.beginPath();c.arc(cx+48,gy-90,40,0,7);c.fill();
-    rg=c.createRadialGradient(cx-30,gy-86,0,cx-30,gy-86,22);rg.addColorStop(0,'rgba(255,40,40,1)');rg.addColorStop(1,'rgba(255,40,40,0)');c.fillStyle=rg;c.beginPath();c.arc(cx-30,gy-86,22,0,7);c.fill()}
-}
-function drawFG(c,P){
-  if(P.indoor){c.fillStyle='#2a2d33';c.fillRect(0,H*.93,W*.42,12);for(let x=10;x<W*.42;x+=70)c.fillRect(x,H*.93,8,H*.07);c.fillStyle='#555a63';c.fillRect(0,H*.93,W*.42,3);
-    c.fillStyle='#c8102e';c.fillRect(W*.62,H*.9,W*.38,H*.1);c.fillStyle='#fff';c.font='bold 22px Inter,sans-serif';c.fillText('META',W*.72,H*.975);return}
-  const r=rng(31);
-  const patch=(x0,x1)=>{for(let i=0;i<70;i++){const x=x0+r()*(x1-x0),h=50+r()*110,lean=(r()-.5)*40;c.strokeStyle=P.plant;c.lineWidth=2+r()*3;c.beginPath();c.moveTo(x,H+5);c.quadraticCurveTo(x+lean*.3,H-h*.5,x+lean,H-h);c.stroke()}
-    for(let i=0;i<14;i++){const x=x0+r()*(x1-x0),y=H-50-r()*95,s=6+r()*8;c.fillStyle=P.fl[i%P.fl.length];for(let k=0;k<5;k++){const a=k*1.256;c.beginPath();c.ellipse(x+Math.cos(a)*s,y+Math.sin(a)*s,s*.75,s*.45,a,0,7);c.fill()}c.fillStyle='#f6c032';c.beginPath();c.arc(x,y,s*.45,0,7);c.fill()}};
-  patch(-10,200);patch(560,W+10);
-}
-const L={bg:mk(),mid:mk(),fg:mk(),key:null};
-function buildLayers(){
-  const P=SCENES[st.scene];
-  for(const k of ['bg','mid','fg'])L[k].getContext('2d').clearRect(0,0,W,H);
-  drawBG(L.bg.getContext('2d'),P);drawRider(L.mid.getContext('2d'),P,st.scene==='noche'||st.scene==='anochecer');drawFG(L.fg.getContext('2d'),P);
-  L.key=st.scene;
-}
-
-/* ===================== simulación óptica ===================== */
-const HAS_FILTER=(()=>{try{const c=mk(2,2).getContext('2d');if(typeof c.filter!=='string')return false;c.filter='blur(2px)';return c.filter==='blur(2px)'}catch(e){return false}})();
-function blur(src,r){
-  if(r<.45)return src;
-  const out=mk(),c=out.getContext('2d');
-  if(HAS_FILTER){c.filter=`blur(${r.toFixed(2)}px)`;c.drawImage(src,0,0);c.filter='none';return out}
-  const s=Math.max(1.01,r/1.1),sw=Math.max(2,Math.round(W/s)),sh=Math.max(2,Math.round(H/s));
-  const sm=mk(sw,sh),sc=sm.getContext('2d');sc.imageSmoothingQuality='high';sc.drawImage(src,0,0,sw,sh);
-  c.imageSmoothingQuality='high';c.drawImage(sm,0,0,W,H);return out;
-}
-function smear(src,dx,dy){ // promedio de copias desplazadas (movimiento)
-  const d=Math.hypot(dx,dy);if(d<.8)return src;
-  const n=Math.min(48,Math.ceil(d/1.3))+1,out=mk(),c=out.getContext('2d');
-  c.globalCompositeOperation='lighter';c.globalAlpha=1/n;
-  for(let i=0;i<n;i++){const u=i/(n-1)-.5;c.drawImage(src,dx*u,dy*u)}
-  return out;
-}
-function shakeImg(src,px){
-  const n=Math.min(40,Math.ceil(px/1.2))+2,out=mk(),c=out.getContext('2d');
-  c.drawImage(src,0,0);
-  const sh=mk(),s=sh.getContext('2d');s.globalCompositeOperation='lighter';s.globalAlpha=1/n;
-  for(let i=0;i<n;i++){const u=i/(n-1);s.drawImage(src,px*(u-.5),px*.45*Math.sin(u*Math.PI*2.2))}
-  c.drawImage(sh,0,0);return out;
-}
-
-/* ===================== estado ===================== */
-const st={mode:'M',scene:'sol',fi:4,ti:2,ii:0,focus:.5,tripod:false,ch:null};
-const expo=(fi=st.fi,ti=st.ti,ii=st.ii)=>SCENES[st.scene].ev+Math.log2(ISO[ii]/100)-Math.log2(F[fi]*F[fi]/T[ti]);
-const blurAt=d=>20*Math.abs(d-st.focus)*(1.4/F[st.fi]);
-const shakePx=t=>(st.tripod||t<=1/60+1e-9)?0:Math.min(36,3+4*Math.log2(t*60));
-function derived(){const t=T[st.ti];return{N:F[st.fi],t,iso:ISO[st.ii],s:expo(),disp:Math.min(W*.9,SPEED*t),shake:shakePx(t),bFg:blurAt(0),bSub:blurAt(.5),bBg:blurAt(1),tripod:st.tripod,focus:st.focus}}
-function bestT(fi,ii){let b=0,bd=1e9;T.forEach((_,i)=>{const d=Math.abs(expo(fi,i,ii));if(d<bd-1e-9){bd=d;b=i}});return b}
-function bestF(ti,ii){let b=0,bd=1e9;F.forEach((_,i)=>{const d=Math.abs(expo(i,ti,ii));if(d<bd-1e-9){bd=d;b=i}});return b}
-function applyMode(){
-  if(st.mode==='A')st.ti=bestT(st.fi,st.ii);
-  else if(st.mode==='S')st.fi=bestF(st.ti,st.ii);
-  else if(st.mode==='P'){
-    const maxT=st.tripod?30:1/60,pref=[4,5,3,6,2,7,1,8,0];let done=false;
-    for(const fi of pref){const ti=bestT(fi,st.ii);if(Math.abs(expo(fi,ti,st.ii))<.5&&T[ti]<=maxT+1e-9){st.fi=fi;st.ti=ti;done=true;break}}
-    if(!done){st.fi=0;st.ti=bestT(0,st.ii)}
-  }
-}
-const fmtS=s=>{const r=Math.round(s);const v=Math.abs(s-r)<.2?r:Math.round(s*10)/10;return v===0?'0':(v>0?'+':'−')+Math.abs(v)};
-
-/* ===================== render ===================== */
-const cv=$('#cam'),cx=cv.getContext('2d');
-let raf=0;function req(){if(!raf)raf=requestAnimationFrame(()=>{raf=0;render()})}
-function render(){
-  if(L.key!==st.scene)buildLayers();
-  const x=derived();
-  const out=mk(),c=out.getContext('2d');
-  c.drawImage(L.bg,0,0);c.drawImage(blur(L.bg,x.bBg),0,0);
-  c.drawImage(smear(blur(L.mid,x.bSub),x.disp,0),0,0);
-  c.drawImage(blur(L.fg,x.bFg),0,0);
-  const fin=x.shake?shakeImg(out,x.shake):out;
-  cx.clearRect(0,0,W,H);cx.drawImage(fin,0,0);
-  // exposición + ruido
-  const img=cx.getImageData(0,0,W,H),d=img.data,g=Math.pow(2,x.s),lut=new Uint8ClampedArray(256);
-  for(let v=0;v<256;v++)lut[v]=255*Math.pow(Math.min(1,Math.pow(v/255,2.2)*g),1/2.2);
-  const amp=.6*st.ii*st.ii;
-  for(let i=0;i<d.length;i+=4){
-    let r=lut[d[i]],gg=lut[d[i+1]],b=lut[d[i+2]];
-    if(amp>0){const k=amp*(1.15-(r+gg+b)/1150),n=(Math.random()+Math.random()+Math.random()-1.5)*k*1.6;
-      r+=n+(Math.random()-.5)*k*.7;gg+=n+(Math.random()-.5)*k*.7;b+=n+(Math.random()-.5)*k*.7}
-    d[i]=r;d[i+1]=gg;d[i+2]=b;d[i+3]=255;
-  }
-  cx.putImageData(img,0,0);
-  updateUI(x);
-}
-const MODEHELP={M:'<b>Manual</b>: tú eliges apertura, velocidad e ISO. Control total.',A:'<b>Prioridad a la apertura</b> (A / Av): tú eliges el diafragma y la cámara calcula la velocidad.',S:'<b>Prioridad a la velocidad</b> (S / Tv): tú eliges la velocidad y la cámara calcula el diafragma.',P:'<b>Programa</b>: la cámara elige apertura y velocidad (intenta no bajar de 1/60 a pulso). Tú solo el ISO.'};
-function updateUI(x){
-  $('#rF').value=st.fi;$('#rT').value=st.ti;$('#rI').value=st.ii;
-  const aF=st.mode==='S'||st.mode==='P',aT=st.mode==='A'||st.mode==='P';
-  $('#rF').disabled=aF;$('#rT').disabled=aT;
-  $('#vF').innerHTML='f/'+x.N+(aF?'<span class="auto">AUTO</span>':'');
-  $('#vT').innerHTML=TL[st.ti]+(aT?'<span class="auto">AUTO</span>':'');
-  $('#vI').textContent=x.iso;
-  $('#rF').setAttribute('aria-valuetext','f/'+x.N+(aF?', automático':''));
-  $('#rT').setAttribute('aria-valuetext',TL[st.ti].replace('"',' segundos')+(TL[st.ti].includes('/')?' de segundo':'')+(aT?', automático':''));
-  $('#rI').setAttribute('aria-valuetext','ISO '+x.iso);
-  $('#oor').style.display=Math.abs(x.s)>3?'block':'none';$('#oor').textContent=x.s>0?'+3 o más':'−3 o menos';$('#oor').style.left=x.s>0?'auto':'0';$('#oor').style.right=x.s>0?'0':'auto';
-  $('#hT').textContent=TL[st.ti];$('#hTa').textContent=aT?'A':'';
-  $('#hF').textContent='f/'+x.N;$('#hFa').textContent=aF?'A':'';
-  $('#hI').textContent=x.iso;
-  const mk_=$('#mk');mk_.style.left=((Math.max(-3,Math.min(3,x.s))+3)/6*100)+'%';mk_.classList.toggle('out',Math.abs(x.s)>3);
-  $('#badge').textContent=st.mode+' · '+SCENES[st.scene].name;
-  $('#warn').style.display=x.shake?'block':'none';
-  $('#modehelp').innerHTML=MODEHELP[st.mode];
-  $$('#modes button').forEach(b=>{const on=b.dataset.m===st.mode;b.classList.toggle('on',on);b.setAttribute('aria-pressed',on)});
-  $$('#focus button').forEach(b=>{const on=+b.dataset.f===st.focus;b.classList.toggle('on',on);b.setAttribute('aria-pressed',on)});
-  $('#scene').value=st.scene;$('#scene').disabled=!!st.ch;$('#tripod').checked=st.tripod;
-  const an=analysis(x);$('#why').innerHTML=an.map(([c,t])=>`<li class="${c}">${t}</li>`).join('');
-  cv.setAttribute('aria-label',`Foto simulada de un ciclista. ${SCENES[st.scene].name}, ${TL[st.ti]}, f/${x.N}, ISO ${x.iso}. `+an.map(a=>a[1].replace(/<[^>]+>/g,'')).join(' '));
-}
-function analysis(x){
-  const a=[],s=x.s;
-  if(Math.abs(s)<.5)a.push(['ok','<b>Exposición correcta</b>: el fotómetro marca 0.']);
-  else if(s>0)a.push(['bad',`<b>Sobreexpuesta (${fmtS(s)} pasos)</b>: entra demasiada luz y se queman las zonas claras. Cierra el diafragma (número mayor), usa una velocidad más rápida o baja el ISO.`]);
-  else a.push(['bad',`<b>Subexpuesta (${fmtS(s)} pasos)</b>: falta luz. Abre el diafragma (número menor), usa una velocidad más lenta o sube el ISO.`]);
-  const fn={0:'las flores del primer plano',.5:'el ciclista',1:'el fondo'}[x.focus];
-  const dof=x.N<=2.8?'muy poca profundidad de campo: solo sale nítido '+fn:x.N<=8?'profundidad de campo media':'mucha profundidad de campo: casi todo sale nítido';
-  a.push(['',`Con <b>f/${x.N}</b> hay ${dof}.`]);
-  if(x.disp<1.5)a.push(['',`A <b>${TL[st.ti]}</b> el ciclista sale <b>congelado</b>.`]);
-  else if(x.disp<12)a.push(['',`A <b>${TL[st.ti]}</b> el ciclista sale <b>ligeramente movido</b>.`]);
-  else a.push(['',`A <b>${TL[st.ti]}</b> el ciclista deja una <b>estela</b> de movimiento.`]);
-  if(x.shake)a.push(['bad',`<b>Trepidación</b>: a ${TL[st.ti]} no puedes sujetar la cámara sin que se mueva y toda la foto sale borrosa. Usa trípode o una velocidad de 1/60 o más rápida.`]);
-  if(x.iso>=3200)a.push(['bad',`<b>ISO ${x.iso}</b>: aparece ruido (grano de colores), sobre todo en las sombras.`]);
-  else if(x.iso>=800)a.push(['',`ISO ${x.iso}: algo de ruido, aún aceptable.`]);
-  return a;
-}
-
-/* ===================== controles ===================== */
-$('#rF').oninput=e=>{st.fi=+e.target.value;applyMode();req()};
-$('#rT').oninput=e=>{st.ti=+e.target.value;applyMode();req()};
-$('#rI').oninput=e=>{st.ii=+e.target.value;applyMode();req()};
-$('#scene').onchange=e=>{st.scene=e.target.value;applyMode();req()};
-$('#tripod').onchange=e=>{st.tripod=e.target.checked;applyMode();req()};
-$$('#modes button').forEach(b=>b.onclick=()=>{st.mode=b.dataset.m;applyMode();req()});
-$$('#focus button').forEach(b=>b.onclick=()=>{st.focus=+b.dataset.f;req()});
-
-/* ===================== retos ===================== */
-const RETOS=[
- {id:'congela',t:'Congela al ciclista',scene:'sol',isoMax:400,d:'Haz que el ciclista salga totalmente nítido, como detenido en el tiempo.',
-  goal:x=>x.disp<1.5&&x.bSub<1.5&&!x.shake,fail:'El ciclista no sale congelado. Necesitas una velocidad muy rápida (1/500 o más) y enfocar al ciclista.'},
- {id:'retrato',t:'Fondo desenfocado',scene:'nublado',isoMax:400,d:'Foto del ciclista nítido con el fondo muy desenfocado (efecto «bokeh»).',
-  goal:x=>x.bBg>=5&&x.bSub<1&&x.disp<3&&!x.shake,fail:'Para separar al ciclista del fondo: enfoca al ciclista y abre mucho el diafragma (f/2.8 o menos), sin que salga movido.'},
- {id:'paisaje',t:'Todo nítido',scene:'sol',isoMax:400,d:'Que salga nítido todo: desde las flores del primer plano hasta las montañas.',
-  goal:x=>Math.max(x.bFg,x.bSub,x.bBg)<=1.3&&x.disp<3&&!x.shake,fail:'Algo sigue desenfocado o movido. Cierra el diafragma (f/11 o más) y enfoca en medio de la escena.'},
- {id:'primer',t:'A través de las flores',scene:'sol',isoMax:400,d:'Enfoca las montañas y convierte las flores del primer plano en manchas de color.',
-  goal:x=>x.focus===1&&x.bFg>=8&&!x.shake,fail:'Enfoca el fondo y abre el diafragma (f/2.8 o menos) para que las flores se deshagan. Ojo: con tanto sol tendrás que usar una velocidad rapidísima.'},
- {id:'estela',t:'Estela de velocidad',scene:'anochecer',isoMax:200,d:'Con la cámara en trípode, haz que el ciclista deje una estela que transmita velocidad.',
-  goal:x=>x.tripod&&x.disp>=40,fail:'Pon la cámara en trípode y usa una velocidad lenta (1/15 o más lenta) para que el ciclista se «arrastre».'},
- {id:'pulso',t:'De noche y a pulso',scene:'noche',isoMax:1600,d:'Sin trípode, consigue una foto bien expuesta y sin trepidación.',
-  goal:x=>!x.tripod&&!x.shake&&Math.abs(x.s)<.5,fail:'Sin trípode necesitas 1/60 o más rápido. Para que entre luz suficiente, abre el diafragma al máximo y sube el ISO lo justo.'},
- {id:'velo',t:'Sprint bajo techo',scene:'velodromo',isoMax:1600,d:'Congela al ciclista en el velódromo cubierto, donde hay mucha menos luz que fuera.',
-  goal:x=>x.disp<1.5&&x.bSub<1.5&&Math.abs(x.s)<.5&&!x.shake,fail:'Hace falta 1/500 o más rápido, enfocado al ciclista y bien expuesto: compensa abriendo el diafragma y subiendo el ISO.'},
- {id:'larga',t:'Larga exposición limpia',scene:'noche',isoMax:100,d:'Con trípode e ISO 100 (sin nada de ruido), consigue una exposición correcta de la calle.',
-  goal:x=>x.tripod&&x.iso===100&&Math.abs(x.s)<.5,fail:'Trípode, ISO 100, y alarga el tiempo de exposición (varios segundos) hasta que el fotómetro marque 0.'}
-];
-let stars=store.get('fotolab-stars',{});
-function starStr(n){return `<span role="img" aria-label="${n} de 3 estrellas">`+'★'.repeat(n)+'<span class="off" aria-hidden="true">'+'☆'.repeat(3-n)+'</span></span>'}
-function renderRetos(){
-  $('#retos').innerHTML=RETOS.map((r,i)=>`<div class="card reto" data-i="${i}"><div class="n">RETO ${i+1} · ${SCENES[r.scene].name.toUpperCase()}</div><h3>${r.t}</h3><p>${r.d}</p><div class="stars">${starStr(stars[r.id]||0)}</div></div>`).join('');
-  $$('.reto').forEach(el=>el.onclick=()=>startReto(+el.dataset.i));
-  const tot=Object.values(stars).reduce((a,b)=>a+b,0);
-  $('#total').textContent=`★ ${tot} / ${RETOS.length*3} estrellas`;
-}
-function startReto(i){
-  const r=RETOS[i];st.ch=i;
-  Object.assign(st,{scene:r.scene,mode:'M',fi:4,ti:6,ii:0,focus:.5,tripod:false});
-  $('#chbT').textContent=`🎯 Reto ${i+1}: ${r.t}`;$('#chbD').textContent=r.d;
-  $('#chb').classList.add('on');$('#exitCh').style.display='';
-  show('camara');applyMode();req();window.scrollTo({top:0,behavior:RM()?'auto':'smooth'});
-}
-function exitReto(){st.ch=null;$('#chb').classList.remove('on');$('#exitCh').style.display='none';req()}
-$('#exitCh').onclick=exitReto;
-$('#shoot').onclick=()=>{
-  render();if(!RM()){const f=$('#flash');f.classList.remove('go');void f.offsetWidth;f.classList.add('go')}
-  const x=derived(),url=cv.toDataURL('image/jpeg',.85);
-  if(st.ch===null){
-    modal(`<img src="${url}" alt="${cv.getAttribute('aria-label')}"><h3>Tu foto</h3><div style="font-family:var(--mono);color:var(--muted)">${TL[st.ti]} · f/${x.N} · ISO ${x.iso} · ${fmtS(x.s)} EV</div><ul>${analysis(x).map(a=>`<li>${a[1]}</li>`).join('')}</ul><div class="acts"><button class="btn pri" data-close>Seguir</button></div>`);return;
-  }
-  const r=RETOS[st.ch],ok=r.goal(x),expOk=Math.abs(x.s)<.5,isoOk=x.iso<=r.isoMax;
-  const n=ok?1+(expOk?1:0)+(isoOk?1:0):0,lines=[];
-  lines.push(ok?'✅ Objetivo conseguido.':'❌ '+r.fail);
-  if(ok)lines.push(expOk?'✅ Exposición correcta.':(x.s>0?`⚠️ Sale sobreexpuesta (${fmtS(x.s)}). Compensa con otro ajuste.`:`⚠️ Sale subexpuesta (${fmtS(x.s)}). Compensa con otro ajuste.`));
-  if(ok)lines.push(isoOk?'✅ ISO bajo: imagen limpia.':`⚠️ ISO ${x.iso} es más de lo necesario (se puede con ISO ${r.isoMax} o menos). Busca la luz con la apertura o la velocidad.`);
-  if(n>(stars[r.id]||0)){stars[r.id]=n;store.set('fotolab-stars',stars);renderRetos()}
-  const next=st.ch+1<RETOS.length;
-  modal(`<img src="${url}" alt="${cv.getAttribute('aria-label')}"><h3>${n===3?'¡Foto perfecta!':n>0?'¡Conseguido!':'Casi…'}</h3><div class="stars">${starStr(n)}</div><div style="font-family:var(--mono);color:var(--muted);font-size:13px">${TL[st.ti]} · f/${x.N} · ISO ${x.iso}${x.tripod?' · trípode':''}</div><ul>${lines.map(l=>`<li>${l}</li>`).join('')}</ul><div class="acts"><button class="btn" data-close>Repetir</button>${next&&n>0?`<button class="btn pri" id="nextR">Siguiente reto →</button>`:`<button class="btn pri" id="toList">Ver retos</button>`}</div>`);
-  const nb=$('#nextR');if(nb)nb.onclick=()=>{closeModal();startReto(st.ch+1)};
-  const tl=$('#toList');if(tl)tl.onclick=()=>{closeModal();exitReto();show('retos')};
-};
-let lastFocus=null;
-function modal(html){lastFocus=document.activeElement;$('#mbox').innerHTML=html;const h=$('#mbox h3');if(h)h.id='mtitle';$('#modal').classList.add('on');$$('#mbox [data-close]').forEach(b=>b.onclick=closeModal);const f=$('#mbox .acts .btn.pri')||$('#mbox button');if(f)f.focus()}
-function closeModal(){$('#modal').classList.remove('on');if(lastFocus&&lastFocus.focus)lastFocus.focus()}
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&$('#modal').classList.contains('on'))closeModal();
-  if(e.key==='Tab'&&$('#modal').classList.contains('on')){const fs=$$('#mbox button');if(!fs.length)return;const a=fs[0],z=fs[fs.length-1];if(e.shiftKey&&document.activeElement===a){e.preventDefault();z.focus()}else if(!e.shiftKey&&document.activeElement===z){e.preventDefault();a.focus()}}});
-$('#modal').onclick=e=>{if(e.target.id==='modal')closeModal()};
-
-/* ===================== composición ===================== */
-const CW=1200,CH=800,HZ=430,LIGHT={x:885,y:345},BOAT={x:360,y:520};
-const sceneC=mk(CW,CH);
-(function drawComp(){
-  const c=sceneC.getContext('2d');
-  let g=c.createLinearGradient(0,0,0,HZ);g.addColorStop(0,'#2b3f7a');g.addColorStop(.55,'#e2836b');g.addColorStop(1,'#ffc98a');c.fillStyle=g;c.fillRect(0,0,CW,HZ);
-  const r=rng(41);
-  for(let i=0;i<7;i++){const x=r()*CW,y=60+r()*220,w=120+r()*200;c.fillStyle=`rgba(255,${170+r()*50},${150+r()*40},.35)`;c.beginPath();c.ellipse(x,y,w,12+r()*10,0,0,7);c.fill()}
-  let rg=c.createRadialGradient(250,HZ,0,250,HZ,180);rg.addColorStop(0,'rgba(255,240,190,1)');rg.addColorStop(.25,'rgba(255,210,140,.6)');rg.addColorStop(1,'rgba(255,200,120,0)');c.fillStyle=rg;c.fillRect(0,HZ-180,500,180);
-  c.fillStyle='#fff1c4';c.beginPath();c.arc(250,HZ,46,Math.PI,0);c.fill();
-  g=c.createLinearGradient(0,HZ,0,CH);g.addColorStop(0,'#c56f63');g.addColorStop(.3,'#4b4f7d');g.addColorStop(1,'#1f2648');c.fillStyle=g;c.fillRect(0,HZ,CW,CH-HZ);
-  c.fillStyle='rgba(255,226,170,.55)';for(let y=HZ+6;y<HZ+200;y+=8){const w=60-(y-HZ)*.2+r()*20;c.fillRect(250-w/2+(r()-.5)*30,y,w,2)}
-  c.strokeStyle='rgba(255,255,255,.12)';c.lineWidth=2;for(let i=0;i<120;i++){const x=r()*CW,y=HZ+20+r()*(CH-HZ),w=10+r()*30;c.beginPath();c.moveTo(x,y);c.quadraticCurveTo(x+w/2,y-3,x+w,y);c.stroke()}
-  // islote y faro
-  c.fillStyle='#2a2430';c.beginPath();c.moveTo(760,500);c.quadraticCurveTo(800,440,870,452);c.quadraticCurveTo(950,440,1010,470);c.quadraticCurveTo(1060,500,1080,520);c.lineTo(740,520);c.fill();
-  c.fillStyle='#3a3140';c.beginPath();c.ellipse(910,522,190,14,0,0,7);c.fill();
-  const lx=LIGHT.x,base=462,top=230;
-  for(let i=0;i<6;i++){const y0=base-(base-top)*i/6,y1=base-(base-top)*(i+1)/6,w0=26-i*1.6,w1=26-(i+1)*1.6;c.fillStyle=i%2?'#f4efe6':'#c8323a';c.beginPath();c.moveTo(lx-w0,y0);c.lineTo(lx+w0,y0);c.lineTo(lx+w1,y1);c.lineTo(lx-w1,y1);c.fill()}
-  c.fillStyle='#222';c.fillRect(lx-22,top-6,44,8);c.fillStyle='#ffe9a6';c.fillRect(lx-12,top-30,24,24);c.fillStyle='#222';c.beginPath();c.moveTo(lx-16,top-30);c.lineTo(lx,top-48);c.lineTo(lx+16,top-30);c.fill();
-  rg=c.createRadialGradient(lx,top-18,0,lx,top-18,60);rg.addColorStop(0,'rgba(255,240,180,.8)');rg.addColorStop(1,'rgba(255,240,180,0)');c.fillStyle=rg;c.beginPath();c.arc(lx,top-18,60,0,7);c.fill();
-  // velero mirando a la izquierda
-  const bx=BOAT.x,by=BOAT.y;
-  c.fillStyle='#1d1a24';c.beginPath();c.moveTo(bx-70,by-4);c.lineTo(bx+55,by-4);c.lineTo(bx+40,by+16);c.lineTo(bx-50,by+16);c.closePath();c.fill();
-  c.fillStyle='#2a2532';c.fillRect(bx+2,by-130,3,126);
-  c.fillStyle='#f3e6d0';c.beginPath();c.moveTo(bx,by-126);c.lineTo(bx,by-10);c.lineTo(bx-62,by-10);c.closePath();c.fill();
-  c.fillStyle='#e8d6bb';c.beginPath();c.moveTo(bx+8,by-110);c.lineTo(bx+8,by-10);c.lineTo(bx+50,by-10);c.closePath();c.fill();
-  c.fillStyle='rgba(255,255,255,.25)';c.fillRect(bx-80,by+16,140,2);
-  // gaviotas
-  c.strokeStyle='#1d1a24';c.lineWidth=2.5;for(const [x,y,s] of [[600,180,14],[640,205,10],[690,170,12]]){c.beginPath();c.moveTo(x-s,y);c.quadraticCurveTo(x-s/2,y-s*.6,x,y);c.quadraticCurveTo(x+s/2,y-s*.6,x+s,y);c.stroke()}
-})();
-const comp={x:250,y:170,w:849,guide:'tercios',ej:0};
-const pc=$('#comp').getContext('2d'),PW=900,PH=600;
-const ch_=()=>comp.w*2/3;
-function clampComp(){comp.x=Math.max(0,Math.min(CW-comp.w,comp.x));comp.y=Math.max(0,Math.min(CH-ch_(),comp.y))}
-function drawCompView(){
-  clampComp();pc.drawImage(sceneC,comp.x,comp.y,comp.w,ch_(),0,0,PW,PH);
-  pc.strokeStyle='rgba(255,255,255,.75)';pc.lineWidth=2;pc.fillStyle='rgba(255,176,32,.95)';
-  const ln=(x1,y1,x2,y2)=>{pc.beginPath();pc.moveTo(x1,y1);pc.lineTo(x2,y2);pc.stroke()};
-  const grid=a=>{for(const f of a){ln(PW*f,0,PW*f,PH);ln(0,PH*f,PW,PH*f)}for(const fx of a)for(const fy of a){pc.beginPath();pc.arc(PW*fx,PH*fy,7,0,7);pc.fill()}};
-  if(comp.guide==='tercios')grid([1/3,2/3]);
-  if(comp.guide==='aurea')grid([.382,.618]);
-  if(comp.guide==='diagonales'){ln(0,0,PW,PH);ln(PW,0,0,PH)}
-  if(comp.guide==='centro'){ln(PW/2-30,PH/2,PW/2+30,PH/2);ln(PW/2,PH/2-30,PW/2,PH/2+30);pc.strokeRect(PW*.25,PH*.25,PW*.5,PH*.5)}
-  $('#vZ').textContent=Math.round(CW/comp.w*10)/10+'×';
-}
-const nx=p=>(p-comp.x)/comp.w,ny=p=>(p-comp.y)/ch_();
-const EJ=[
- {t:'Libre',d:'Encuadra como quieras y prueba las distintas guías del visor.',check:()=>null},
- {t:'Faro en un punto fuerte',d:'Coloca el faro sobre uno de los <b>cuatro cruces</b> de la regla de los tercios.',guide:'tercios',
-  check:()=>{const x=nx(LIGHT.x),y=ny(LIGHT.y);if(x<0||x>1||y<0||y>1)return[false,'El faro se ha quedado fuera del encuadre.'];
-   let best=9;for(const a of[1/3,2/3])for(const b of[1/3,2/3])best=Math.min(best,Math.hypot(x-a,(y-b)*.67));
-   if(best<.05)return[true,'¡Muy bien! El faro está en un punto fuerte: la mirada va directa a él y la foto respira mejor que con el faro centrado.'];
-   if(Math.abs(x-.5)<.06&&Math.abs(y-.5)<.08)return[false,'El faro está en el centro. Funciona en fotos simétricas, pero aquí queda estático: desplázalo a un cruce.'];
-   return[false,'Aún no está sobre un cruce. Activa la guía «Tercios» y lleva el faro a uno de los puntos naranjas.']}},
- {t:'Horizonte en un tercio',d:'No partas la foto por la mitad: coloca el <b>horizonte</b> sobre la línea del tercio superior o inferior.',guide:'tercios',
-  check:()=>{const y=ny(HZ);if(y<0||y>1)return[false,'El horizonte ha quedado fuera de la foto.'];
-   if(Math.abs(y-1/3)<.035)return[true,'¡Bien! Horizonte en el tercio superior: das protagonismo al mar.'];
-   if(Math.abs(y-2/3)<.035)return[true,'¡Bien! Horizonte en el tercio inferior: das protagonismo al cielo del atardecer.'];
-   if(Math.abs(y-.5)<.06)return[false,'El horizonte parte la foto en dos mitades iguales y no se sabe qué es lo importante, si el cielo o el mar.'];
-   return[false,'Acerca el horizonte a una de las dos líneas horizontales de los tercios.']}},
- {t:'Deja aire al velero',d:'El velero navega hacia la <b>izquierda</b>: déjale espacio delante colocándolo en el <b>tercio derecho</b>.',guide:'tercios',
-  check:()=>{const x=nx(BOAT.x),y=ny(BOAT.y-50);if(x<0||x>1||y<0||y>1)return[false,'El velero se ha quedado fuera del encuadre.'];
-   if(Math.abs(x-2/3)<.07)return[true,'¡Perfecto! El velero tiene espacio hacia donde navega: la foto transmite movimiento.'];
-   if(x<.45)return[false,'El velero está «chocando» contra el borde izquierdo: no le queda espacio para avanzar. Colócalo a la derecha.'];
-   return[false,'Vas bien: llévalo hasta la línea vertical del tercio derecho.']}}
-];
-const GUIDES=[['ninguna','Ninguna'],['tercios','Tercios'],['aurea','Áurea'],['diagonales','Diagonales'],['centro','Centro']];
-function renderCompUI(){
-  $('#ejs').innerHTML=EJ.map((e,i)=>`<button data-i="${i}" class="${i===comp.ej?'on':''}">${e.t}</button>`).join('');
-  $('#guides').innerHTML=GUIDES.map(([k,n])=>`<button data-g="${k}" class="${k===comp.guide?'on':''}">${n}</button>`).join('');
-  $('#ejd').innerHTML=EJ[comp.ej].d;$('#check').style.display=comp.ej?'':'none';
-  $$('#ejs button').forEach(b=>b.onclick=()=>{comp.ej=+b.dataset.i;if(EJ[comp.ej].guide)comp.guide=EJ[comp.ej].guide;comp.x=250;comp.y=170;$('#compfb').className='fb';renderCompUI();drawCompView()});
-  $$('#guides button').forEach(b=>b.onclick=()=>{comp.guide=b.dataset.g;renderCompUI();drawCompView()});
-}
-$('#rZ').oninput=e=>{const cxm=comp.x+comp.w/2,cym=comp.y+ch_()/2;comp.w=CW-(+e.target.value/100)*(CW-420);comp.x=cxm-comp.w/2;comp.y=cym-ch_()/2;drawCompView()};
-function moveComp(dx,dy){const st_=comp.w*.06;comp.x+=dx*st_;comp.y+=dy*st_;$('#compfb').className='fb';drawCompView();announceComp()}
-function announceComp(){const p=(v,a,b)=>v<0||v>1?'fuera':v<a?'a la izquierda':v>b?'a la derecha':'en el centro';const q=(v)=>v<0||v>1?'fuera':v<.42?'arriba':v>.58?'abajo':'en el centro';
-  $('#comppos').textContent=`Faro ${p(nx(LIGHT.x),.42,.58)} y ${q(ny(LIGHT.y))}; velero ${p(nx(BOAT.x),.42,.58)}; horizonte ${q(ny(HZ))}.`}
-$$('.pad button').forEach(b=>b.onclick=()=>{if(b.dataset.mv==='c'){comp.x=(CW-comp.w)/2;comp.y=(CH-ch_())/2;$('#compfb').className='fb';drawCompView();announceComp();return}const [dx,dy]=b.dataset.mv.split(',').map(Number);moveComp(dx,dy)});
-$('#compwrap').addEventListener('keydown',e=>{const k={ArrowLeft:[-1,0],ArrowRight:[1,0],ArrowUp:[0,-1],ArrowDown:[0,1]}[e.key];if(k){e.preventDefault();moveComp(...k)}});
-$('#check').onclick=()=>{const r=EJ[comp.ej].check();if(!r)return;const fb=$('#compfb');fb.className='fb '+(r[0]?'ok':'bad');fb.innerHTML=(r[0]?'✅ ':'❌ ')+r[1]};
-(function drag(){const el=$('#compwrap');let p=null;
-  el.addEventListener('pointerdown',e=>{p={x:e.clientX,y:e.clientY};el.setPointerCapture(e.pointerId)});
-  el.addEventListener('pointermove',e=>{if(!p)return;const k=comp.w/el.clientWidth;comp.x-=(e.clientX-p.x)*k;comp.y-=(e.clientY-p.y)*k;p={x:e.clientX,y:e.clientY};$('#compfb').className='fb';drawCompView()});
-  const up=()=>p=null;el.addEventListener('pointerup',up);el.addEventListener('pointercancel',up)})();
-
-/* ===================== teoría ===================== */
-const TEO=[
- ['La exposición'],
- ['📐','El triángulo de exposición',`<p>Una foto está bien expuesta cuando al sensor le llega la cantidad justa de luz. Esa cantidad depende de <b>tres ajustes</b>: la <b>apertura</b> (cuánta luz entra a la vez), la <b>velocidad</b> (durante cuánto tiempo) y el <b>ISO</b> (cuánto se amplifica la señal).</p><p>Cada ajuste tiene además un <b>efecto secundario</b>: la apertura cambia la profundidad de campo, la velocidad decide si el movimiento sale congelado o movido, y el ISO añade ruido. Elegir la combinación es lo que hace el fotógrafo.</p>`],
- ['🪜','El «paso» de luz',`<p>Un <b>paso</b> (o EV) es doblar o reducir a la mitad la luz. Los tres ajustes se miden en pasos, así que se pueden <b>compensar</b> entre sí:</p><div class="k">1/250 · f/8 · ISO 100 = 1/500 · f/5.6 · ISO 100 = 1/500 · f/8 · ISO 200</div><p>Si ganas un paso con un ajuste y lo pierdes con otro, la foto sale igual de clara (pero con distinto efecto).</p>`,()=>preset({scene:'sol',mode:'A',fi:5,ii:0})],
- ['⭕','Apertura o diafragma',`<p>Es el agujero del objetivo por el que entra la luz. Se indica con el <b>número f</b>, y funciona «al revés»: <b>número pequeño = agujero grande</b>.</p><div class="k">f/1.4 · f/2 · f/2.8 · f/4 · f/5.6 · f/8 · f/11 · f/16 · f/22</div><p>Cada salto de la escala es <b>un paso</b>: de f/4 a f/5.6 entra la mitad de luz.</p>`,()=>preset({scene:'nublado',mode:'A',fi:0,focus:.5})],
- ['🎯','Profundidad de campo',`<p>Es la zona de la foto que sale nítida por delante y por detrás del punto enfocado.</p><p><b>Diafragma abierto</b> (f/1.4–f/2.8): poca profundidad, fondo borroso. Ideal para retratos. <b>Diafragma cerrado</b> (f/11–f/22): casi todo nítido. Ideal para paisajes.</p><p>También influyen la distancia al sujeto (cuanto más cerca, menos profundidad) y la focal del objetivo.</p>`,()=>preset({scene:'nublado',mode:'A',fi:0,focus:0})],
- ['⏱️','Velocidad de obturación',`<p>Es el tiempo que el obturador está abierto. Se mide en fracciones de segundo.</p><div class="k">1/4000 · 1/1000 · 1/250 · 1/60 · 1/15 · 1/2 · 1" · 30"</div><p><b>Rápida</b> (1/500 o más): congela el movimiento. <b>Lenta</b> (1/30 o menos): el movimiento deja estela… y si no usas trípode, toda la foto sale movida (<b>trepidación</b>). Regla práctica a pulso: no bajar de <b>1/focal</b> (1/50 con un 50 mm).</p>`,()=>preset({scene:'anochecer',mode:'S',ti:9,tripod:true})],
- ['🌫️','ISO',`<p>Es la sensibilidad del sensor. <b>Doblar el ISO</b> (100 → 200) es ganar <b>un paso</b> de luz sin tocar apertura ni velocidad.</p><p>El precio es el <b>ruido</b>: puntitos de color y pérdida de detalle, sobre todo en las sombras. Por eso se usa el ISO más bajo posible y se sube solo cuando falta luz.</p>`,()=>preset({scene:'noche',mode:'S',ti:6,ii:6})],
- ['📊','El fotómetro',`<p>La cámara mide la luz y te lo indica con una escala: <b>0</b> es exposición correcta, <b>−</b> subexpuesta (oscura) y <b>+</b> sobreexpuesta (clara). En la app lo ves abajo del visor.</p><p>Ojo: el fotómetro busca un «gris medio». Ante escenas muy blancas (nieve) o muy negras, puede equivocarse y conviene compensar.</p>`],
- ['🔤','Modos M, A, S y P',`<p><b>M (manual)</b>: eliges todo. <b>A / Av (prioridad a la apertura)</b>: eliges el diafragma, la cámara pone la velocidad; el más usado para retratos y paisajes. <b>S / Tv (prioridad a la velocidad)</b>: eliges la velocidad, la cámara pone el diafragma; para deporte y movimiento. <b>P (programa)</b>: la cámara elige las dos.</p>`],
- ['La composición'],
- ['#️⃣','Regla de los tercios',`<p>Divide la imagen con dos líneas horizontales y dos verticales. Colocar el sujeto en las <b>líneas</b> o en los <b>cruces</b> (puntos fuertes) suele dar fotos más dinámicas que centrarlo. El horizonte, mejor en un tercio que en la mitad.</p>`,()=>presetComp(1)],
- ['🐚','Proporción áurea',`<p>Es una versión más refinada de los tercios: las líneas se colocan al 38 % y 62 % de la imagen (el número de oro, 1,618). Está presente en pintura y arquitectura clásicas.</p>`,()=>{comp.guide='aurea';presetComp(0)}],
- ['➡️','Regla del aire (o de la mirada)',`<p>Deja espacio en la dirección hacia la que mira o se mueve el sujeto. Si alguien mira o camina hacia el borde, la foto parece «chocar».</p>`,()=>presetComp(3)],
- ['🛤️','Líneas guía',`<p>Caminos, vías, barandillas, orillas… Las líneas de la escena llevan la mirada hacia el sujeto. Las diagonales transmiten dinamismo; las horizontales, calma.</p>`],
- ['🪞','Simetría y patrones',`<p>En reflejos, edificios o pasillos, centrar y buscar la simetría es la excepción a la regla de los tercios: transmite orden y equilibrio. Los patrones repetidos también funcionan, sobre todo si algo los rompe.</p>`],
- ['🖼️','Encuadre natural',`<p>Usar elementos de la escena (una ventana, un arco, ramas) como marco dentro de la foto dirige la atención y da profundidad.</p>`],
- ['⬜','Espacio negativo',`<p>Dejar mucho espacio vacío (cielo, pared, mar) alrededor de un sujeto pequeño lo destaca y transmite soledad o calma. Menos es más.</p>`],
- ['🧍','Punto de vista',`<p>Agáchate o sube: no todo se fotografía a la altura de los ojos. Desde abajo (contrapicado) el sujeto parece poderoso; desde arriba (picado), pequeño o vulnerable.</p>`]
-];
-function preset(o){exitReto();Object.assign(st,{focus:.5,tripod:false},o);applyMode();show('camara');req();window.scrollTo({top:0,behavior:RM()?'auto':'smooth'})}
-function presetComp(i){comp.ej=i;if(EJ[i].guide)comp.guide=EJ[i].guide;comp.x=250;comp.y=170;$('#compfb').className='fb';renderCompUI();drawCompView();show('comp');window.scrollTo({top:0,behavior:RM()?'auto':'smooth'})}
-(function(){const tryFns=[];
-  $('#teoria').innerHTML=TEO.map(t=>{if(t.length===1)return`<div class="sect">${t[0]}</div>`;const id=t[3]?tryFns.push(t[3])-1:-1;
-    return`<details class="card acc"><summary><span class="e">${t[0]}</span>${t[1]}</summary><div class="body">${t[2]}${id>=0?`<button class="btn pri" data-try="${id}">Pruébalo →</button>`:''}</div></details>`}).join('');
-  $$('[data-try]').forEach(b=>b.onclick=()=>tryFns[+b.dataset.try]())})();
-
-/* ===================== test ===================== */
-const QS=[
- ['¿Qué diafragma deja entrar MÁS luz?',['f/1.4','f/5.6','f/11','f/22'],'El número f funciona al revés: cuanto más pequeño, más grande es la abertura y más luz entra.'],
- ['Pasar de f/4 a f/5.6 supone…',['Perder un paso: entra la mitad de luz','Ganar un paso: entra el doble de luz','No cambia la luz, solo el enfoque','Perder dos pasos'],'Cada número de la escala (2.8, 4, 5.6, 8…) deja pasar la mitad de luz que el anterior.'],
- ['Quieres congelar a un atleta en pleno sprint. ¿Qué velocidad eliges?',['1/1000','1/30','1/4','2 segundos'],'Para congelar movimiento rápido hacen falta velocidades de 1/500 o más rápidas.'],
- ['¿Cuál es el principal inconveniente de subir mucho el ISO?',['Aparece ruido en la imagen','Se reduce la profundidad de campo','El movimiento deja estela','La foto sale más oscura'],'Un ISO alto amplifica la señal del sensor y, con ella, el ruido.'],
- ['Para un retrato con el fondo muy desenfocado usarías…',['Un diafragma abierto, como f/1.8','Un diafragma cerrado, como f/16','Una velocidad lenta, como 1/8','ISO 6400'],'Abrir el diafragma reduce la profundidad de campo y desenfoca el fondo.'],
- ['Tienes 1/250 · f/8 · ISO 100. ¿Qué combinación da la MISMA exposición?',['1/500 · f/5.6 · ISO 100','1/125 · f/5.6 · ISO 100','1/500 · f/11 · ISO 100','1/250 · f/5.6 · ISO 100'],'Abrir de f/8 a f/5.6 gana un paso, y pasar de 1/250 a 1/500 lo pierde: se compensan.'],
- ['En el modo A (o Av) de la cámara…',['Tú eliges la apertura y la cámara calcula la velocidad','Tú eliges la velocidad y la cámara la apertura','La cámara lo elige todo','Tú lo eliges todo'],'A/Av = prioridad a la apertura. Es el modo favorito para controlar la profundidad de campo.'],
- ['La regla de los tercios consiste en…',['Colocar los elementos importantes en las líneas o cruces de una cuadrícula de 3×3','Dejar siempre el sujeto en el centro','Hacer tres fotos de cada escena','Que el cielo ocupe un tercio exacto siempre'],'Los cruces de la cuadrícula son los «puntos fuertes» de la imagen.'],
- ['La regla del aire dice que hay que dejar espacio…',['Hacia donde mira o se mueve el sujeto','Detrás del sujeto','Arriba de la cabeza siempre','Por igual a todos los lados'],'Si el sujeto «mira» o avanza hacia el borde, la foto parece cortada.'],
- ['A pulso, con un objetivo de 50 mm, ¿cuál es la velocidad más lenta recomendable?',['1/50 aproximadamente','1/2','1"','1/4000'],'Regla práctica: no usar velocidades más lentas que 1/focal para evitar la trepidación.'],
- ['El fotómetro marca −2. La foto saldrá…',['Oscura: le faltan dos pasos de luz','Clara: le sobran dos pasos de luz','Bien expuesta','Desenfocada'],'Los valores negativos indican subexposición.'],
- ['Para un paisaje nítido desde el primer plano hasta las montañas usarías…',['f/11 – f/16','f/1.4','f/2','Da igual el diafragma'],'Cerrar el diafragma aumenta la profundidad de campo.'],
- ['Subes el ISO de 200 a 400. Para mantener la exposición puedes…',['Usar una velocidad el doble de rápida','Usar una velocidad el doble de lenta','Abrir un paso el diafragma','Nada, la exposición no cambia'],'Doblar el ISO gana un paso: puedes compensarlo perdiendo un paso con la velocidad (o cerrando el diafragma).'],
- ['¿Qué son las líneas guía?',['Líneas de la escena que llevan la mirada hacia el sujeto','Las líneas de la cuadrícula del visor','Las rayas del horizonte torcido','El ruido en forma de bandas'],'Caminos, vías o barandillas dirigen la vista del espectador.'],
- ['Fotografías una calle de noche con trípode. ¿Qué te permite el trípode?',['Usar velocidades lentas con ISO bajo, sin trepidación','Congelar los coches','Desenfocar el fondo','Usar ISO más alto'],'Con la cámara fija, puedes exponer varios segundos sin que la foto salga movida.']
-];
-let tq=[],tn=0,tok=0;
-function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
-function startTest(){tq=shuffle(QS).slice(0,10);tn=0;tok=0;drawQ()}
-function drawQ(){
-  if(tn>=tq.length){const msg=tok>=9?'¡Fotógrafo/a de primera! 📸':tok>=7?'Muy bien, dominas lo básico.':tok>=5?'Vas por buen camino. Repasa la teoría.':'Repasa la teoría y prueba otra vez.';
-    $('#test').innerHTML=`<div class="big">${tok}/10</div><p style="text-align:center">${msg}</p><button class="btn pri" style="width:100%" id="again">Otra ronda</button>`;
-    $('#again').onclick=startTest;const best=store.get('fotolab-test',0);if(tok>best)store.set('fotolab-test',tok);return}
-  const [q,opts,exp]=tq[tn],correct=opts[0],sh=shuffle(opts);
-  $('#test').innerHTML=`<div class="prog"><i style="width:${tn*10}%"></i></div><div style="font-size:12px;color:var(--muted)">Pregunta ${tn+1} de 10 · ${tok} aciertos</div><div class="q">${q}</div><div class="opts">${sh.map(o=>`<button>${o}</button>`).join('')}</div><div class="exp" id="exp"></div>`;
-  $$('#test .opts button').forEach(b=>b.onclick=()=>{
-    const ok=b.textContent===correct;if(ok)tok++;
-    $$('#test .opts button').forEach(x=>{x.disabled=true;if(x.textContent===correct)x.classList.add('ok')});if(!ok)b.classList.add('bad');
-    const e=$('#exp');e.style.display='block';e.innerHTML=(ok?'✅ ':'❌ ')+exp+`<div style="margin-top:10px"><button class="btn pri" id="nq">${tn===9?'Ver resultado':'Siguiente →'}</button></div>`;
-    $('#nq').onclick=()=>{tn++;drawQ()}});
-}
-
-/* ===================== navegación ===================== */
-function show(v){$$('.view').forEach(s=>s.classList.toggle('active',s.id==='v-'+v));$$('nav.tabs button').forEach(b=>{const on=b.dataset.v===v;b.classList.toggle('on',on);if(on)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current')});if(v==='comp')drawCompView()}
-$$('nav.tabs button').forEach(b=>b.onclick=()=>{show(b.dataset.v);window.scrollTo({top:0})});
-
-/* ===================== acerca de y actualizaciones ===================== */
-const VERSION=document.querySelector('meta[name="app-version"]').content;
-$('#about').onclick=()=>modal(`<h3>FotoLab</h3><div style="font-family:var(--mono);color:var(--muted)">Versión ${VERSION}</div><p><b>Autores:</b> Adela Moreno Vega y Carlos Moreno Otto.</p><p style="font-size:0.8667rem"><b>Novedades 1.1:</b> funciona en horizontal, botones y teclado para encuadrar, compatible con VoiceOver, botones más grandes, la letra crece con el tamaño de texto del sistema y respeta «Reducir movimiento».</p><p style="font-size:13px;color:var(--muted)">© 2026. Todos los derechos reservados. La cámara es una simulación con fines didácticos: los valores son aproximados.</p><p style="font-size:13px;color:var(--muted)">En el móvil puedes instalarla: en el iPhone, Compartir → «Añadir a pantalla de inicio»; en Android, menú → «Instalar aplicación». Se actualiza sola y funciona sin conexión.</p><div class="acts"><button class="btn pri" data-close>Cerrar</button></div>`);
-const EN_WEB=/\.github\.io$/.test(location.hostname)||location.hostname==='localhost';
-let actPendiente=false;
-const vCmp=(a,b)=>{const x=a.split('.').map(Number),y=b.split('.').map(Number);for(let i=0;i<Math.max(x.length,y.length);i++){const d=(x[i]||0)-(y[i]||0);if(d)return d}return 0};
-// Nunca se recarga con una ventana abierta
-const seguroRecargar=()=>!$('#modal').classList.contains('on');
-function actualizar(){if(!seguroRecargar()){actPendiente=true;return}$('#barra-act').hidden=false;setTimeout(()=>location.replace(location.pathname+'?u='+Date.now()+location.hash),900)}
-let lastCheck=0;
-async function buscarVersion(){
-  if(!EN_WEB||Date.now()-lastCheck<4000)return;lastCheck=Date.now();
-  try{const txt=await(await fetch(location.pathname+'?v='+Date.now(),{cache:'no-store'})).text();
-    const m=txt.match(/name="app-version" content="([^"]+)"/);if(m&&vCmp(m[1],VERSION)>0)actualizar()}catch(e){}
-}
-new MutationObserver(()=>{if(actPendiente&&seguroRecargar()){actPendiente=false;actualizar()}}).observe($('#modal'),{attributes:true,attributeFilter:['class']});
-document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')buscarVersion()});
-addEventListener('focus',buscarVersion);addEventListener('pageshow',buscarVersion);setInterval(buscarVersion,90000);buscarVersion();
-if(/[?&]u=/.test(location.search))history.replaceState(history.state,'',location.pathname+location.hash);
-if(EN_WEB&&'serviceWorker' in navigator){addEventListener('load',()=>navigator.serviceWorker.register('sw.js').then(r=>r.update()).catch(()=>{}))}
-
-renderRetos();renderCompUI();drawCompView();startTest();applyMode();render();
-</script>
+<script src="js/motor.js?r=2.0"></script>
+<script src="js/juegos.js?r=2.0"></script>
+<script src="js/composicion.js?r=2.0"></script>
+<script src="js/misfotos.js?r=2.0"></script>
+<script src="js/aprende.js?r=2.0"></script>
 </body>
 </html>
