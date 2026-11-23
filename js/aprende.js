@@ -158,13 +158,31 @@ onShow['aprende-test']=()=>{if(!tq.length||tn>=tq.length)startTest()};
 /* ===================== acerca de y actualizaciones ===================== */
 const VERSION=document.querySelector('meta[name="app-version"]').content;
 const NOVEDADES=[
+ ['2.1',['Nuevo botón ⚙︎ Ajustes con «Buscar actualizaciones», autores y aviso','Ayuda para instalarla con los pasos de tu móvil, y aviso amarillo para tenerla en la pantalla de inicio','Iconos para todos los tamaños e imagen al compartir el enlace']],
  ['2.0',['4 escenas nuevas: cascada, retrato con luces (bokeh), nieve y autovía de noche','Distancia focal, compensación de exposición, balance de blancos, histograma y barrido','19 retos en 4 niveles, juegos «Adivina los ajustes» y «Contrarreloj», y medallas','Composición con 5 fotos, proporciones, «¿Cuál es mejor?» y «Detecta la regla»','Mis fotos: analiza los datos de tus fotos y completa misiones','Glosario, historia de la fotografía y test por temas']],
  ['1.1',['Funciona en horizontal, botones para encuadrar, VoiceOver, botones más grandes, letra que crece con el sistema y respeto a «Reducir movimiento»']]
 ];
-$('#about').onclick=()=>modal(`<h3>FotoLab</h3><div style="font-family:var(--mono);color:var(--muted)">Versión ${VERSION}</div><p><b>Autores:</b> Adela Moreno Vega y Carlos Moreno Otto.</p>
-  ${NOVEDADES.map(([v,it])=>`<p style="font-size:.85rem;margin-bottom:2px"><b>Novedades ${v}</b></p><ul style="font-size:.8rem;margin-top:0">${it.map(i=>`<li>${i}</li>`).join('')}</ul>`).join('')}
-  <p style="font-size:.78rem;color:var(--muted)">© 2026. Todos los derechos reservados. La cámara es una simulación didáctica: los valores son aproximados. Las fotos que analizas no salen de tu dispositivo.</p>
-  <p style="font-size:.78rem;color:var(--muted)">Para instalarla: en el iPhone, Compartir → «Añadir a pantalla de inicio»; en Android, menú → «Instalar aplicación». Se actualiza sola y funciona sin conexión.</p><div class="acts"><button class="btn pri" data-close>Cerrar</button></div>`);
+function verAjustes(desde){modal(`<h3 id="mtitle">${desde?'¡La app se ha actualizado!':'Ajustes'}</h3>
+  ${desde?`<ul>${NOVEDADES.filter(([v])=>vCmp(v,desde)>0).slice(0,4).flatMap(([v,it])=>it).map(i=>`<li>${i}</li>`).join('')}</ul>`:''}
+  <p style="font-size:.85rem;margin:14px 0 4px"><b>Instalar en el móvil</b></p>
+  ${IK.instalada()?'<p style="font-size:.85rem;color:var(--muted);margin:0">✓ Ya la estás usando como app instalada.</p>':'<button class="btn" id="aj-instalar">📲 Cómo añadirla a la pantalla de inicio</button>'}
+  <p style="font-size:.85rem;margin:14px 0 4px"><b>Acerca de</b></p>
+  <div style="display:flex;gap:10px;align-items:center"><img src="icon-192.png" alt="" width="44" height="44" style="width:44px;border-radius:10px"><div><b>FotoLab · Aprende fotografía</b><br><span style="font-family:var(--mono);color:var(--muted);font-size:.85rem">Versión ${VERSION}</span></div></div>
+  <p style="font-size:.85rem;margin:8px 0 0">Creada por <b>Adela Moreno Vega</b> y <b>Carlos Moreno Otto</b>.</p>
+  <p style="font-size:.78rem;color:var(--muted);margin:4px 0 0">© ${new Date().getFullYear()} Adela Moreno Vega y Carlos Moreno Otto. Todos los derechos reservados. Uso personal y educativo gratuito.</p>
+  <p style="font-size:.85rem;margin:14px 0 4px"><b>Aviso</b></p>
+  <p style="font-size:.8rem;color:var(--muted);margin:0">Esta app es una ayuda para aprender y puede contener errores. La cámara es una simulación didáctica: sus valores son aproximados. Las fotos que analizas no salen de tu dispositivo.</p>
+  <p style="font-size:.85rem;margin:14px 0 4px"><b>Versión</b></p>
+  <p style="font-size:.8rem;color:var(--muted);margin:0">Se actualiza sola cuando hay una versión nueva.</p>
+  <div class="acts"><button class="btn" id="aj-buscar">🔄 Buscar actualizaciones</button><button class="btn" id="aj-nov">Ver novedades</button></div>
+  <p id="aj-upd-msg" role="status" style="font-size:.78rem;color:var(--muted);margin:6px 0 0">La app lo comprueba sola cada vez que la abres o vuelves a ella.</p>
+  <div id="aj-novlist" hidden>${NOVEDADES.slice(0,4).map(([v,it])=>`<p style="font-size:.85rem;margin-bottom:2px"><b>Versión ${v}</b></p><ul style="font-size:.8rem;margin-top:0">${it.map(i=>`<li>${i}</li>`).join('')}</ul>`).join('')}</div>
+  <div class="acts"><button class="btn pri" data-close>${desde?'Entendido':'Cerrar'}</button></div>`);
+  const b=$('#aj-instalar');if(b)b.onclick=()=>IK.abrirInstalar();
+  $('#aj-buscar').onclick=()=>IK.buscar($('#aj-buscar'),$('#aj-upd-msg'));
+  $('#aj-nov').onclick=()=>{const l=$('#aj-novlist');l.hidden=!l.hidden};
+}
+$('#about').onclick=()=>verAjustes(null);
 const EN_WEB=/\.github\.io$/.test(location.hostname)||location.hostname==='localhost';
 let actPendiente=false;
 const vCmp=(a,b)=>{const x=a.split('.').map(Number),y=b.split('.').map(Number);for(let i=0;i<Math.max(x.length,y.length);i++){const d=(x[i]||0)-(y[i]||0);if(d)return d}return 0};
@@ -179,7 +197,8 @@ document.addEventListener('visibilitychange',()=>{if(document.visibilityState===
 addEventListener('focus',buscarVersion);addEventListener('pageshow',buscarVersion);setInterval(buscarVersion,90000);buscarVersion();
 if(/[?&]u=/.test(location.search))history.replaceState(history.state,'',location.pathname+location.hash);
 if(EN_WEB&&'serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js').then(r=>r.update()).catch(()=>{}));
-(function(){const seen=store.get('fotolab-version',null);store.set('fotolab-version',VERSION);if(seen&&vCmp(VERSION,seen)>0)setTimeout(()=>$('#about').click(),700)})();
+(function(){const seen=store.get('fotolab-version',null);store.set('fotolab-version',VERSION);if(seen&&vCmp(VERSION,seen)>0)setTimeout(()=>verAjustes(seen),700)})();
+IK.init({nombre:'FotoLab',clave:'fotolab',version:VERSION,onNueva:()=>actualizar(),esInicio:()=>$('#v-camara').classList.contains('active')&&!$('#modal').classList.contains('on')});
 
 /* ===================== arranque ===================== */
 renderTemas();
