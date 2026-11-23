@@ -158,7 +158,8 @@ onShow['aprende-test']=()=>{if(!tq.length||tn>=tq.length)startTest()};
 /* ===================== acerca de y actualizaciones ===================== */
 const VERSION=document.querySelector('meta[name="app-version"]').content;
 const NOVEDADES=[
- ['2.1',['Nuevo botón ⚙︎ Ajustes con «Buscar actualizaciones», autores y aviso','Ayuda para instalarla con los pasos de tu móvil, y aviso amarillo para tenerla en la pantalla de inicio','Iconos para todos los tamaños e imagen al compartir el enlace']],
+ ['2.1.1',['📲 Ayuda para instalar al día con iOS 27: el botón de tres rayas dentro de la barra de la dirección']],
+  ['2.1',['Nuevo botón ⚙︎ Ajustes con «Buscar actualizaciones», autores y aviso','Ayuda para instalarla con los pasos de tu móvil, y aviso amarillo para tenerla en la pantalla de inicio','Iconos para todos los tamaños e imagen al compartir el enlace']],
  ['2.0',['4 escenas nuevas: cascada, retrato con luces (bokeh), nieve y autovía de noche','Distancia focal, compensación de exposición, balance de blancos, histograma y barrido','19 retos en 4 niveles, juegos «Adivina los ajustes» y «Contrarreloj», y medallas','Composición con 5 fotos, proporciones, «¿Cuál es mejor?» y «Detecta la regla»','Mis fotos: analiza los datos de tus fotos y completa misiones','Glosario, historia de la fotografía y test por temas']],
  ['1.1',['Funciona en horizontal, botones para encuadrar, VoiceOver, botones más grandes, letra que crece con el sistema y respeto a «Reducir movimiento»']]
 ];
